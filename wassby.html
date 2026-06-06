@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wassby Sweet - Catálogo Oficial</title>
+    
+    <!-- Fuentes Elegantes de Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+    
+    <!-- Íconos Premium FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-color: #fdfbf7;
+            --text-dark: #3a2318;
+            --text-light: #7a6a63;
+            --accent-pink: #d98a8a;
+            --card-bg: #ffffff;
+            --gold: #c4a47c;
+            --footer-text: #e6dfd1;
+            --wpp-green: #25d366;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(58,35,24,0.01) 10px, rgba(58,35,24,0.01) 11px);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- LOGO Y ENCABEZADO --- */
+        .header {
+            text-align: center;
+            padding: 50px 20px 20px;
+        }
+
+        .logo-container {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 25px;
+            border-radius: 50%;
+            border: 2px dashed var(--gold);
+            padding: 5px;
+            background-color: white;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+            transition: transform 0.3s ease;
+        }
+
+        .logo-container:hover {
+            transform: scale(1.03);
+        }
+
+        .logo-container img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: contain;
+        }
+
+        .location-text {
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-light);
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .brand-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: -0.5px;
+        }
+
+        .brand-name .sweet {
+            font-family: 'Dancing Script', cursive;
+            color: var(--accent-pink);
+            font-weight: 600;
+            margin-left: 5px;
+        }
+
+        .quote {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: var(--text-dark);
+            font-size: 1.15rem;
+        }
+
+        .quote span {
+            color: var(--gold);
+            font-weight: bold;
+            font-size: 1.4rem;
+        }
+
+        /* --- INTRO SECCIÓN --- */
+        .intro-section {
+            text-align: center;
+            padding: 30px 20px 10px;
+        }
+
+        .intro-subtitle {
+            font-family: 'Dancing Script', cursive;
+            color: var(--accent-pink);
+            font-size: 1.6rem;
+            margin-bottom: 8px;
+        }
+
+        .intro-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.4rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 15px;
+        }
+
+        .intro-title span {
+            font-style: italic;
+            color: var(--gold);
+        }
+
+        .intro-desc {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            max-width: 440px;
+            margin: 0 auto;
+        }
+
+        /* --- CHIPS INTERACTIVOS --- */
+        .categories-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            padding: 30px 20px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .chip {
+            background-color: var(--card-bg);
+            border: 1px solid #efe8df;
+            padding: 10px 18px;
+            border-radius: 25px;
+            font-size: 0.88rem;
+            color: var(--text-dark);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            user-select: none;
+        }
+
+        .chip i {
+            color: var(--accent-pink);
+            font-size: 1rem;
+        }
+
+        .chip .count {
+            background-color: #f5eedf;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .chip:hover {
+            transform: translateY(-2px);
+            border-color: var(--gold);
+        }
+
+        .chip.active {
+            background-color: var(--text-dark);
+            color: white;
+            border-color: var(--text-dark);
+            box-shadow: 0 8px 15px rgba(58,35,24,0.15);
+        }
+
+        .chip.active i {
+            color: var(--gold);
+        }
+
+        .chip.active .count {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        /* --- CUADRÍCULA DE PRODUCTOS --- */
+        .products-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 35px;
+            padding: 20px;
+            max-width: 500px;
+            margin: 0 auto 50px;
+        }
+
+        .product-card {
+            background-color: var(--card-bg);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(58,35,24,0.06);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(58,35,24,0.12);
+        }
+
+        .product-card.hidden {
+            display: none;
+        }
+
+        .product-image-container {
+            position: relative;
+            height: 320px;
+            width: 100%;
+            background-color: #f5eedf;
+        }
+
+        .product-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .price-tag {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(4px);
+            color: var(--text-dark);
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 1.15rem;
+            padding: 8px 22px;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border: 1px solid rgba(196,164,124,0.2);
+        }
+
+        .product-info {
+            padding: 25px;
+        }
+
+        .product-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.55rem;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+            font-weight: 700;
+        }
+
+        .product-desc {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 22px;
+            min-height: 45px;
+        }
+
+        .btn-order {
+            display: block;
+            width: 100%;
+            background-color: var(--text-dark);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            transition: background-color 0.2s, transform 0.1s;
+            border: none;
+            outline: none;
+        }
+
+        .btn-order:hover {
+            background-color: #4f3224;
+        }
+
+        .btn-order:active {
+            transform: scale(0.98);
+        }
+
+        .btn-order i {
+            color: var(--wpp-green); 
+            margin-right: 8px;
+            font-size: 1.2rem;
+            vertical-align: middle;
+        }
+
+        /* --- FOOTER --- */
+        .footer {
+            background-color: var(--text-dark);
+            color: var(--bg-color);
+            padding: 60px 30px 110px 30px;
+            text-align: left;
+            margin-top: 80px;
+        }
+
+        .footer-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--bg-color);
+            letter-spacing: -0.5px;
+        }
+
+        .footer-desc {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--footer-text);
+            margin-bottom: 40px;
+            max-width: 500px;
+        }
+
+        .footer-contact {
+            list-style: none;
+            margin-bottom: 40px;
+        }
+
+        .footer-contact li {
+            font-size: 1rem;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            color: var(--footer-text);
+        }
+
+        .footer-contact li i {
+            color: var(--gold);
+            width: 35px;
+            font-size: 1.2rem;
+        }
+
+        .footer-social-links {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-start;
+        }
+
+        .footer-social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #4f3224;
+            color: var(--bg-color);
+            text-decoration: none;
+            font-size: 1.3rem;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .footer-social-links a:hover {
+            background-color: var(--gold);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom-text {
+            margin-top: 40px;
+            font-size: 0.75rem;
+            color: #8c7368;
+            letter-spacing: 0.5px;
+        }
+
+        /* --- BOTÓN FLOTANTE WHATSAPP (IZQUIERDA) --- */
+        .floating-wpp {
+            position: fixed;
+            bottom: 30px;
+            left: 20px;
+            background-color: var(--wpp-green);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.1rem;
+            box-shadow: 0 5px 20px rgba(37,211,102,0.4);
+            z-index: 1000;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .floating-wpp:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(37,211,102,0.5);
+        }
+
+        /* --- ADAPTACIÓN RESPONSIVA PANTALLAS GRANDES --- */
+        @media (min-width: 768px) {
+            .brand-name { font-size: 3.5rem; }
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                max-width: 950px;
+            }
+            .footer {
+                padding-left: 15%;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .products-grid {
+                grid-template-columns: repeat(3, 1fr);
+                max-width: 1200px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BOTÓN FLOTANTE DE WHATSAPP -->
+    <a href="https://wa.me/50585140940" class="floating-wpp" target="_blank" rel="noopener noreferrer" title="Escríbenos directamente">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- ENCABEZADO -->
+    <header class="header">
+        <div class="logo-container">
+            <img src="logo.jpg" alt="Wassby Sweet Logo">
+        </div>
+        <div class="location-text">REPOSTERÍA ARTESANAL · MANAGUA, NICARAGUA</div>
+        <h1 class="brand-name">Wassby <span class="sweet">Sweet</span></h1>
+        <p class="quote"><span>“</span> Un pedacito de cielo en cada bocado. <span>”</span></p>
+    </header>
+
+    <!-- INTRODUCCIÓN -->
+    <section class="intro-section">
+        <div class="intro-subtitle">— Nuestro Menú</div>
+        <h2 class="intro-title">Endulzamos <span>tus<br>momentos</span></h2>
+        <p class="intro-desc">Toca <strong>Pedir ahora</strong> o <strong>Consultar precio</strong> y te atendemos directo por WhatsApp. Hacemos pedidos personalizados.</p>
+    </section>
+
+    <!-- BARRA INTERACTIVA DE CATEGORÍAS -->
+    <nav class="categories-container">
+        <div class="chip active" data-target="all">
+            <i class="fa-solid fa-cookie"></i> Todos <span class="count">15</span>
+        </div>
+        <div class="chip" data-target="vaso">
+            <i class="fa-solid fa-ice-cream"></i> Postres en Vaso <span class="count">7</span>
+        </div>
+        <div class="chip" data-target="tortas">
+            <i class="fa-solid fa-cake-candles"></i> Tortas <span class="count">5</span>
+        </div>
+        <div class="chip" data-target="cupcakes">
+            <i class="fa-solid fa-mug-hot"></i> Cupcakes <span class="count">1</span>
+        </div>
+        <div class="chip" data-target="tradicional">
+            <i class="fa-solid fa-heart"></i> Tradicional / Gelatinas <span class="count">2</span>
+        </div>
+    </nav>
+
+    <!-- GRILLA DE PRODUCTOS -->
+    <main class="products-grid">
+        
+        <!-- Producto 1 (ACTUALIZADO) -->
+        <article class="product-card" data-category="vaso">
+            <div class="product-image-container">
+                <!-- Se cambió la imagen a 1_2.jpeg -->
+                <img src="1.jpeg" alt="Postre Mosaico">
+                <div class="price-tag">C$110</div>
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Mosaico</h3>
+                <!-- Se actualizó la descripción -->
+                <p class="product-desc">Textura increíblemente suave y cremosa. Capas de felicidad listas para alegrar tu día en una presentación práctica.</p>
+                <a href="https://wa.me/50585140940?text=Hola!%20Quiero%20ordenar%20un%20Mosaico" class="btn-order" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-brands fa-whatsapp"></i> Pedir ahora
+                </a>
+            </div>
+        </article>
+
+        <!-- Producto 2 -->
+        <article class="product-card" data-category="tradicional">
+            <div class="product-image-container">
+                <img src="2.jpeg" alt="Gelatina Tres Leches">
+                <div class="price-tag">C$600</div>
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Gelatina Tres Leches</h3>
+                <p class="product-desc">La suavidad perfecta hecha postre. El toque elegante y tradicional para compartir en familia.</p>
+                <a href="https://wa.me/50585140940?text=Hola!%20Quiero%20ordenar%20una%20Gelatina%20Tres%20Leches" class="btn-order" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-brands fa-whatsapp"></i> Pedir ahora
+                </a>
+            </div>
+        </article>
+
+        <!-- Producto 3 -->
+        <article class="product-card" data-category="tortas">
+            <div class="product-image-container">
+                <img src="3.jpeg" alt="Torta de Atolillo">
+                <div class="price-tag">C$120</div>
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Torta de Atolillo</h3>
+                <p class="product-desc">Un clásico espectacular con el sabor of casa y un toque exquisito de canela.</p>
+                <a href="https://wa.me/50585140940?text=Hola!%20Quiero%20ordenar%20una%20Torta%20de%20Atolillo" class="btn-order" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-brands fa-whatsapp"></i> Pedir ahora
+                </a>
+            </div>
+        </article>
+
+        <!-- Producto 4 -->
+        <article class="product-card" data-category="tortas">
+            <div class="product-image-container">
+                <img src="4.jpeg" alt="Torta de Chocolate con Crema">
+                <div class="price-tag">C$150</div>
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Torta de Chocolate con Crema</h3>
+                <p class="product-desc">Deliciosa base húmeda de chocolate cubierta con abundante y suave crema.</p>
+                <a href="https://wa.me/50585140940?text=Hola!%20Quiero%20ordenar%20una%20Torta%20de%20Chocolate%20con%20Crema" class="btn-order" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-brands fa-whatsapp"></i> Pedir ahora
+                </a>
+            </div>
+        </article>
+
+        <!-- Producto 5 -->
+        <article class="product-card" data-category="tortas">
+            <div class="product-image-container">
+                <img src="5.jpeg" alt="Torta de Piña">
+                <div class="price-tag">C$150</div>
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Torta de Piña</h3>
+                <p class="product-desc">Esponjosa y jugosa torta con el inconfundible sabor dulce y tropical de la piña.</p>
+                <a href="https://wa.me/50585140940?text=Hola!%20Quiero%20ordenar%20una%20Torta%20de%20Piña" class="btn-order" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-brands fa-whatsapp"></i> Pedir ahora
+                </a>
+            </div>
+        </article>
+
+        <!-- Producto 6 -->
+        <article class="product-card" data-category="vaso">
+            <div class="product-image-container">
+                <img src="6.jpeg" alt="Tres Leches de Chocolate">
+                <div class="price-tag">C$100</div>
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Tres Leches de Chocolate</h3>
+                <p class="product-desc">La fusión perfecta del tradicional tres leches con el irresistible y decadente sabor a chocolate.</p>
+                <a href="https://wa.me/50585140940?text=Hola!%20Quiero%20ordenar%20un%20Tres%20Leches%20de%20Chocolate" class="btn-order" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-brands fa-whatsapp"></i> Pedir ahora
+                </a>
+            </div>
+        </article>
+
+        <!-- Producto 7 -->
+        <article class="product-card" data-category="tortas">
+            <div class="product-image-container">
+                <img src="7.jpeg" alt="Porción Torta de Chocolate">
+                <div class="price-tag">C$70</div>
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Torta de Chocolate (Porción)</h3>
+                <p class="product-desc">Extremadamente dulce y esponjosa, finamente decorada con exquisito dulce de leche.</p>
+                <a href="https://wa.me/50585140940?text=Hola!%20Quiero%20ordenar%20una%20Porción%20de%20Torta%20de%20Chocolate" class="btn-order" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-brands fa-whatsapp"></i> Pedir ahora
+                </a>
+            </div>
+        </article>
+
+        <!-- Producto 8 -->
+        <article class="product-card" data-category="cupcakes">
+            <div class="product-image-container">
+                <img src="8.jpeg" alt="Cupcakes Especiales">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Cupcakes Especiales</h3>
+                <p class="product-desc">Detalles llenos de amor. Disponibles en deliciosos sabores clásicos: Vainilla y Chocolate.</p>
+                <a href="https://wa.me/50585140940?text=Hola!%20Quiero%20consultar%20precios%20de%20los%20Cupcakes%20Especiales" class="btn-order" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-brands fa-whatsapp"></i> Consultar precio
+                </a>
+            </div>
+        </article>
+
+        <!-- Producto 9 -->
+        <article class="product-card" data-category="vaso">
+            <div class="product-image-container">
+                <img src="9.png" alt="Torta de Mermelada de Piña">
+                <div class="price-tag">C$60</div>
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Torta de Mermelada de Piña</h3>
+                <p class="product-desc">Capas de bizcocho suave intercaladas con una deliciosa y fresca mermelada de piña.</p>
+                <a href="https://wa.me/50585140940?text=Hola!%20Quiero%20ordenar%20una%20Torta%20de%20Mermelada%20de%20Piña" class="btn-order" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-brands fa-whatsapp"></i> Pedir ahora
+                </a>
+            </div>
+        </article>
+
+        <!-- Producto 10 -->
+        <article class="product-card" data-category="vaso">
+            <div class="product-image-container">
+                <img src="10.png" alt="Torta con Mermelada de Fresa">
+                <div class="price-tag">C$60</div>
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Torta con Mermelada de Fresa</h3>
+                <p class="product-desc">El postre perfecto para llevar, combinando el mejor bizcocho con una dulce mermelada de fresa.</p>
+                <a href="https://wa.me/50585140940?text=Hola!%20Quiero%20ordenar%20una%20Torta%20con%20Mermelada%20de%20Fresa" class="btn-order" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-brands fa-whatsapp"></i> Pedir ahora
+                </a>
+            </div>
+        </article>
+
+        <!-- Producto 11 -->
+        <article class="product-card" data-category="vaso">
+            <div class="product-image-container">
+                <img src="11.jpeg" alt="Mousse de Maracuyá">
+                <div class="price-tag">C$90</div>
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Mousse de Maracuyá</h3>
+                <p class="product-desc">Deliciosa textura increíblemente cremosa con el equilibrio perfecto entre dulce y el toque cítrico del maracuyá.</p>
+                <a href="https://wa.me/50585140940?text=Hola!%20Quiero%20ordenar%20un%20Mousse%20de%20Maracuyá" class="btn-order" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-brands fa-whatsapp"></i> Pedir ahora
+                </a>
+            </div>
+        </article>
+
+        <!-- Producto 12 -->
+        <article class="product-card" data-category="vaso">
+            <div class="product-image-container">
+                <img src="12.jpeg" alt="Copa Wassby Especial">
+                <div class="price-tag">C$100</div>
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Copa Wassby Especial</h3>
+                <p class="product-desc">Nuestra especialidad en capas de bizcocho suave y crema deliciosa, el postre perfecto de la casa para llevar.</p>
+                <a href="https://wa.me/50585140940?text=Hola!%20Quiero%20ordenar%20una%20Copa%20Wassby%20Especial" class="btn-order" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-brands fa-whatsapp"></i> Pedir ahora
+                </a>
+            </div>
+        </article>
+
+        <!-- Producto 13 -->
+        <article class="product-card" data-category="tortas">
+            <div class="product-image-container">
+                <img src="13.jpeg" alt="Torta Especial para Celebrar">
+                <div class="price-tag">C$600</div>
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Torta Especial para Celebrar</h3>
+                <p class="product-desc">Ideal para tus festejos. Cubierta de suave crema y decorada delicadamente con un exquisito enrejado de dulce de leche.</p>
+                <a href="https://wa.me/50585140940?text=Hola!%20Quiero%20ordenar%20una%20Torta%20Especial%20para%20Celebrar" class="btn-order" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-brands fa-whatsapp"></i> Pedir ahora
+                </a>
+            </div>
+        </article>
+
+        <!-- Producto 14 -->
+        <article class="product-card" data-category="vaso">
+            <div class="product-image-container">
+                <img src="14.jpeg" alt="Pío Quinto">
+                <div class="price-tag">C$90</div>
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Pío Quinto</h3>
+                <p class="product-desc">Un tesoro de la tradición nicaragüense. Bizcocho exquisitamente húmedo coronado con una suave capa muy cremosa.</p>
+                <a href="https://wa.me/50585140940?text=Hola!%20Quiero%20ordenar%20un%20Pío%20Quinto" class="btn-order" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-brands fa-whatsapp"></i> Pedir ahora
+                </a>
+            </div>
+        </article>
+
+        <!-- Producto 15 -->
+        <article class="product-card" data-category="tradicional">
+            <div class="product-image-container">
+                <img src="15.jpeg" alt="Gelatina de Durazno">
+                <div class="price-tag">C$100</div>
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Gelatina de Durazno</h3>
+                <p class="product-desc">Una porción dulce y sumamente suave, rebosante del delicioso y refrescante sabor a durazno.</p>
+                <a href="https://wa.me/50585140940?text=Hola!%20Quiero%20ordenar%20una%20Gelatina%20de%20Durazno" class="btn-order" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-brands fa-whatsapp"></i> Pedir ahora
+                </a>
+            </div>
+        </article>
+
+    </main>
+
+    <!-- PIE DE PÁGINA -->
+    <footer class="footer">
+        <h3 class="footer-title">Wassby Sweet</h3>
+        <p class="footer-desc">Repostería artesanal hecha en casa con ingredientes de la mejor calidad. Tortas, postres en vaso, cupcakes y mucho más para endulzar tus momentos especiales.</p>
+
+        <h3 class="footer-title">Contacto</h3>
+        <ul class="footer-contact">
+            <li><i class="fa-solid fa-phone"></i> 8514-0940</li>
+            <li><i class="fa-solid fa-location-dot"></i> Managua, Nicaragua</li>
+            <li><i class="fa-solid fa-clock"></i> Pedidos con 24h de anticipación</li>
+        </ul>
+
+        <h3 class="footer-title">Síguenos</h3>
+        <div class="footer-social-links">
+            <a href="https://www.instagram.com/wassby_sweat" target="_blank" rel="noopener noreferrer" title="Instagram">
+                <i class="fa-brands fa-instagram"></i>
+            </a>
+            <a href="https://www.tiktok.com/@wassby_sweat" target="_blank" rel="noopener noreferrer" title="TikTok">
+                <i class="fa-brands fa-tiktok"></i>
+            </a>
+            <a href="https://wa.me/50585140940" target="_blank" rel="noopener noreferrer" title="WhatsApp Directo">
+                <i class="fa-brands fa-whatsapp"></i>
+            </a>
+        </div>
+        
+        <p class="footer-bottom-text">&copy; 2026 Wassby Sweet. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- LÓGICA DE FILTRADO INTERACTIVO -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const chips = document.querySelectorAll('.chip');
+            const products = document.querySelectorAll('.product-card');
+
+            chips.forEach(chip => {
+                chip.addEventListener('click', () => {
+                    // Cambiar chip activo
+                    chips.forEach(c => c.classList.remove('active'));
+                    chip.classList.add('active');
+
+                    // Obtener categoría seleccionada
+                    const targetCategory = chip.getAttribute('data-target');
+
+                    // Filtrar los productos
+                    products.forEach(product => {
+                        const productCategory = product.getAttribute('data-category');
+                        
+                        if (targetCategory === 'all' || productCategory === targetCategory) {
+                            product.classList.remove('hidden');
+                        } else {
+                            product.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
