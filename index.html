@@ -411,6 +411,77 @@
             object-position: center;
         }
 
+        /* --- GALERÍA DE IMÁGENES EN TARJETAS --- */
+        .product-gallery {
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+            width: 100%;
+        }
+
+        .gallery-track {
+            display: flex;
+            transition: transform 0.3s ease;
+            height: 100%;
+        }
+
+        .gallery-track img {
+            min-width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .gallery-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+            color: var(--text-dark);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: background 0.2s;
+        }
+
+        .gallery-btn:hover {
+            background: white;
+        }
+
+        .gallery-btn.prev { left: 10px; }
+        .gallery-btn.next { right: 10px; }
+
+        .gallery-dots {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 6px;
+            z-index: 5;
+        }
+
+        .gallery-dots .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .gallery-dots .dot.active {
+            background: white;
+        }
+
         .price-tag {
             position: absolute;
             bottom: 15px;
@@ -425,6 +496,7 @@
             border-radius: 30px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
             border: 1px solid rgba(184,147,95,0.3);
+            z-index: 6;
         }
 
         .product-info {
@@ -481,8 +553,7 @@
             vertical-align: middle;
         }
 
-        /* CTA secundario: para "Consultar precio", visualmente distinto de "Pedir ahora"
-           para que el cliente entienda que es una consulta y no un pedido directo */
+        /* CTA secundario: para "Consultar precio", visualmente distinto de "Pedir ahora" */
         .btn-order.btn-secondary {
             background-color: transparent;
             color: var(--text-dark);
@@ -664,16 +735,16 @@
         <!-- BARRA INTERACTIVA DE CATEGORÍAS -->
         <nav class="categories-container">
             <div class="chip active" data-target="all" role="button" tabindex="0">
-                <i class="fa-solid fa-cookie"></i> Todos <span class="count">14</span>
+                <i class="fa-solid fa-cookie"></i> Todos <span class="count">18</span>
             </div>
             <div class="chip" data-target="vaso" role="button" tabindex="0">
-                <i class="fa-solid fa-ice-cream"></i> Postres en Vaso <span class="count">6</span>
+                <i class="fa-solid fa-ice-cream"></i> Postres en Vaso <span class="count">7</span>
             </div>
             <div class="chip" data-target="tortas" role="button" tabindex="0">
-                <i class="fa-solid fa-cake-candles"></i> Tortas <span class="count">5</span>
+                <i class="fa-solid fa-cake-candles"></i> Tortas <span class="count">7</span>
             </div>
             <div class="chip" data-target="cupcakes" role="button" tabindex="0">
-                <i class="fa-solid fa-mug-hot"></i> Cupcakes <span class="count">1</span>
+                <i class="fa-solid fa-mug-hot"></i> Cupcakes <span class="count">2</span>
             </div>
             <div class="chip" data-target="tradicional" role="button" tabindex="0">
                 <i class="fa-solid fa-heart"></i> Tradicional / Gelatinas <span class="count">2</span>
@@ -683,14 +754,97 @@
         <!-- GRILLA DE PRODUCTOS -->
         <main class="products-grid">
 
-            <!-- Producto 1 -->
+            <!-- Producto: Mosaico Premium (Galería) -->
+            <article class="product-card" data-category="vaso">
+                <span class="badge">Especialidad</span>
+                <div class="product-image-container">
+                    <div class="product-gallery" data-current="0">
+                        <div class="gallery-track">
+                            <img src="17.1.jpeg" alt="Mosaico torta">
+                            <img src="17.jpeg" alt="Mosaico Torta">
+                        </div>
+                        <button class="gallery-btn prev" aria-label="Anterior">&lt;</button>
+                        <button class="gallery-btn next" aria-label="Siguiente">&gt;</button>
+                        <div class="gallery-dots">
+                            <span class="dot active"></span>
+                            <span class="dot"></span>
+                        </div>
+                    </div>
+                    <div class="price-tag">C$1500</div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Mosaico Premium</h3>
+                    <p class="product-desc">Nuestra especialidad en versión mas grande. Delicioso mosaico cremoso con trozos de fruta. ¡Un placer para compartir!</p>
+                    <a href="https://wa.me/50585140940?text=Hola!%20Quiero%20ordenar%20un%20Mosaico%20Premium" class="btn-order" target="_blank" rel="noopener noreferrer">
+                        <i class="fa-brands fa-whatsapp"></i> Pedir ahora
+                    </a>
+                </div>
+            </article>
+
+            <!-- Producto: Pastel Celeste Personalizado (Galería) -->
+            <article class="product-card" data-category="tortas">
+                <div class="product-image-container">
+                    <div class="product-gallery" data-current="0">
+                        <div class="gallery-track">
+                            <img src="16.1.jpeg" alt="Pastel Celeste Deportivo">
+                            <img src="16.jpeg" alt="Pastel Celeste delicioso">
+                        </div>
+                        <button class="gallery-btn prev" aria-label="Anterior">&lt;</button>
+                        <button class="gallery-btn next" aria-label="Siguiente">&gt;</button>
+                        <div class="gallery-dots">
+                            <span class="dot active"></span>
+                            <span class="dot"></span>
+                        </div>
+                    </div>
+                    <div class="price-tag">C$900</div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Pastel Celeste Personalizado</h3>
+                    <p class="product-desc">Espectacular torta decorada con temática deportiva o de tu preferencia. Personalizada para cumpleaños inolvidables.</p>
+                    <a href="https://wa.me/50585140940?text=Hola!%20Quiero%20ordenar%20un%20Pastel%20Celeste%20Personalizado" class="btn-order" target="_blank" rel="noopener noreferrer">
+                        <i class="fa-brands fa-whatsapp"></i> Pedir ahora
+                    </a>
+                </div>
+            </article>
+
+            <!-- Producto: Torta de Chocolate Especial -->
+            <article class="product-card" data-category="tortas">
+                <div class="product-image-container">
+                    <img src="18.jpeg" alt="Torta de Chocolate Especial" loading="lazy">
+                    <div class="price-tag">C$800</div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Torta de Chocolate Especial</h3>
+                    <p class="product-desc">Exquisita torta de chocolate artesanal, extremadamente húmeda y esponjosa, cubierta con un irresistible dulce de leche.</p>
+                    <a href="https://wa.me/50585140940?text=Hola!%20Quiero%20ordenar%20una%20Torta%20de%20Chocolate%20Especial" class="btn-order" target="_blank" rel="noopener noreferrer">
+                        <i class="fa-brands fa-whatsapp"></i> Pedir ahora
+                    </a>
+                </div>
+            </article>
+
+            <!-- Producto: Cupcakes Artesanales -->
+            <article class="product-card" data-category="cupcakes">
+                <div class="product-image-container">
+                    <img src="19.jpeg" alt="Pastel Artesanales" loading="lazy">
+                    <div class="price-tag">C$500</div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Pastel Artesanales</h3>
+                    <p class="product-desc">Deliciosos pasteles decorados especialmente para celebrar. Disponibles en sabor chocolate y vainilla.</p>
+                    <a href="https://wa.me/50585140940?text=Hola!%20Quiero%20ordenar%20Cupcakes%20Artesanales" class="btn-order" target="_blank" rel="noopener noreferrer">
+                        <i class="fa-brands fa-whatsapp"></i> Pedir ahora
+                    </a>
+                </div>
+            </article>
+
+            <!-- Producto 1 (Original) -->
             <article class="product-card" data-category="vaso">
                 <div class="product-image-container">
                     <img src="1.jpeg" alt="Postre Mosaico">
-                    <div class="price-tag">C$110</div>
+                    <div class="price-tag">C$120</div>
                 </div>
                 <div class="product-info">
-                    <h3 class="product-title">Mosaico</h3>
+                    <h3 class="product-title">Mosaico en vaso</h3>
                     <p class="product-desc">Textura increíblemente suave y cremosa. Capas de felicidad listas para alegrar tu día en una presentación práctica.</p>
                     <a href="https://wa.me/50585140940?text=Hola!%20Quiero%20ordenar%20un%20Mosaico" class="btn-order" target="_blank" rel="noopener noreferrer">
                         <i class="fa-brands fa-whatsapp"></i> Pedir ahora
@@ -762,7 +916,7 @@
             <article class="product-card" data-category="vaso">
                 <div class="product-image-container">
                     <img src="6.jpeg" alt="Tres Leches de Chocolate" loading="lazy">
-                    <div class="price-tag">C$100</div>
+                    <div class="price-tag">C$150</div>
                 </div>
                 <div class="product-info">
                     <h3 class="product-title">Tres Leches de Chocolate</h3>
@@ -806,7 +960,7 @@
             <article class="product-card" data-category="vaso">
                 <div class="product-image-container">
                     <img src="9.png" alt="Torta de Mermelada de Piña" loading="lazy">
-                    <div class="price-tag">C$60</div>
+                    <div class="price-tag">C$80</div>
                 </div>
                 <div class="product-info">
                     <h3 class="product-title">Torta de Mermelada de Piña</h3>
@@ -834,10 +988,10 @@
 
             <!-- Producto 12 -->
             <article class="product-card" data-category="vaso">
-                <span class="badge">Especialidad</span>
+                <span class="badge">Nuevos colores</span>
                 <div class="product-image-container">
                     <img src="12.jpeg" alt="Copa Wassby Especial" loading="lazy">
-                    <div class="price-tag">C$100</div>
+                    <div class="price-tag">C$150</div>
                 </div>
                 <div class="product-info">
                     <h3 class="product-title">Copa Wassby Especial</h3>
@@ -849,25 +1003,36 @@
             </article>
 
             <!-- Producto 13 -->
-            <article class="product-card" data-category="tortas">
+             <article class="product-card" data-category="vaso">
+                <span class="badge">Nuevo</span>
                 <div class="product-image-container">
-                    <img src="13.jpeg" alt="Torta Especial para Celebrar" loading="lazy">
+                    <div class="product-gallery" data-current="0">
+                        <div class="gallery-track">
+                            <img src="13.1.jpeg" alt="Tres leche Bandeja">
+                            <img src="13.jpeg" alt="Tres leche Bandeja">
+                        </div>
+                        <button class="gallery-btn prev" aria-label="Anterior">&lt;</button>
+                        <button class="gallery-btn next" aria-label="Siguiente">&gt;</button>
+                        <div class="gallery-dots">
+                            <span class="dot active"></span>
+                            <span class="dot"></span>
+                        </div>
+                    </div>
                     <div class="price-tag">C$600</div>
                 </div>
                 <div class="product-info">
-                    <h3 class="product-title">Torta Especial para Celebrar</h3>
-                    <p class="product-desc">Ideal para tus festejos. Cubierta de suave crema y decorada delicadamente con un exquisito enrejado de dulce de leche.</p>
-                    <a href="https://wa.me/50585140940?text=Hola!%20Quiero%20ordenar%20una%20Torta%20Especial%20para%20Celebrar" class="btn-order" target="_blank" rel="noopener noreferrer">
+                    <h3 class="product-title">Bandeja de tres leche Premium</h3>
+                    <p class="product-desc">Una porcion mas grande de tres leche. Delicioso tres leche, que con solo ver te dan ganas de mas!</p>
+                    <a href="https://wa.me/50585140940?text=Hola!%20Quiero%20ordenar%20un%20Mosaico%20Premium" class="btn-order" target="_blank" rel="noopener noreferrer">
                         <i class="fa-brands fa-whatsapp"></i> Pedir ahora
                     </a>
                 </div>
             </article>
-
             <!-- Producto 14 -->
             <article class="product-card" data-category="vaso">
                 <div class="product-image-container">
                     <img src="14.jpeg" alt="Pío Quinto" loading="lazy">
-                    <div class="price-tag">C$90</div>
+                    <div class="price-tag">C$100</div>
                 </div>
                 <div class="product-info">
                     <h3 class="product-title">Pío Quinto</h3>
@@ -909,10 +1074,10 @@
 
             <h3 class="footer-title">Síguenos</h3>
             <div class="footer-social-links">
-                <a href="https://www.instagram.com/wassby_sweat" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram">
+                <a href="https://www.instagram.com/WassbySweet" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram">
                     <i class="fa-brands fa-instagram"></i>
                 </a>
-                <a href="https://www.tiktok.com/@wassby_sweat" target="_blank" rel="noopener noreferrer" aria-label="TikTok" title="TikTok">
+                <a href="https://www.tiktok.com/@WassbySweet_" target="_blank" rel="noopener noreferrer" aria-label="TikTok" title="TikTok">
                     <i class="fa-brands fa-tiktok"></i>
                 </a>
                 <a href="https://wa.me/50585140940" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Directo" title="WhatsApp Directo">
@@ -925,7 +1090,7 @@
 
     </div><!-- /#site-content -->
 
-    <!-- LÓGICA DE FILTRADO Y ENTRADA -->
+    <!-- LÓGICA DE FILTRADO, ENTRADA Y GALERÍA -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
@@ -972,6 +1137,63 @@
                         selectChip(chip);
                     }
                 });
+            });
+
+            // --- Galería de imágenes para productos ---
+            document.querySelectorAll('.product-gallery').forEach(gallery => {
+                const track = gallery.querySelector('.gallery-track');
+                const prevBtn = gallery.querySelector('.prev');
+                const nextBtn = gallery.querySelector('.next');
+                const dots = gallery.querySelectorAll('.dot');
+                const images = gallery.querySelectorAll('img');
+                let currentIndex = 0;
+
+                function updateGallery() {
+                    track.style.transform = `translateX(-${currentIndex * 100}%)`;
+                    dots.forEach((dot, index) => {
+                        dot.classList.toggle('active', index === currentIndex);
+                    });
+                }
+
+                if (prevBtn && nextBtn) {
+                    prevBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        currentIndex = (currentIndex - 1 + images.length) % images.length;
+                        updateGallery();
+                    });
+
+                    nextBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        currentIndex = (currentIndex + 1) % images.length;
+                        updateGallery();
+                    });
+                }
+
+                // Soporte para deslizar con el dedo en móviles
+                let touchStartX = 0;
+                let touchEndX = 0;
+
+                track.addEventListener('touchstart', e => {
+                    touchStartX = e.changedTouches[0].screenX;
+                }, {passive: true});
+
+                track.addEventListener('touchend', e => {
+                    touchEndX = e.changedTouches[0].screenX;
+                    handleSwipe();
+                }, {passive: true});
+
+                function handleSwipe() {
+                    const swipeThreshold = 50;
+                    if (touchStartX - touchEndX > swipeThreshold) {
+                        // Deslizar a la izquierda (siguiente)
+                        currentIndex = (currentIndex + 1) % images.length;
+                        updateGallery();
+                    } else if (touchEndX - touchStartX > swipeThreshold) {
+                        // Deslizar a la derecha (anterior)
+                        currentIndex = (currentIndex - 1 + images.length) % images.length;
+                        updateGallery();
+                    }
+                }
             });
         });
     </script>
