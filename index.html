@@ -1223,8 +1223,6 @@
             </div>
         </section>
 
-        <!-- ==================== MENÚ ==================== -->
-        <main>
             <div class="section-head" id="menu">
                 <p class="section-eyebrow">Hecho a pedido ♡</p>
                 <h2 class="section-title">Nuestros postres</h2>
@@ -1257,8 +1255,8 @@
                         <div class="price-tag">C$100</div>
                     </div>
                     <div class="product-info">
-                        <h3 class="product-title">Cheesecake</h3>
-                        <p class="product-desc">Cremoso cheesecake artesanal con trocitos de galleta de chocolate, servido en práctico vaso para disfrutar en cualquier momento.</p>
+                        <h3 class="product-title">Cheesecake de orio</h3>
+                        <p class="product-desc">Cremoso cheesecake de orio artesanal con trocitos de galleta de chocolate, servido en práctico vaso para disfrutar en cualquier momento.</p>
                         <div class="card-actions">
                             <div class="qty-stepper" role="group" aria-label="Cantidad de Cheesecake">
                                 <button type="button" class="qty-btn" data-step="-1" aria-label="Quitar una unidad">−</button>
@@ -1288,7 +1286,7 @@
                                 <button type="button" class="dot" aria-label="Ir a imagen 3"></button>
                             </div>
                         </div>
-                        <div class="price-tag">C$100</div>
+                        <div class="price-tag">C$150</div>
                     </div>
                     <div class="product-info">
                         <h3 class="product-title">Fresas con Chocolate</h3>
@@ -1659,7 +1657,6 @@
                     </div>
                 </article>
 
-                <!-- 19. Copa Wassby Especial -->
                 <article class="product-card" data-category="vaso" data-id="copa-wassby" data-name="Copa Wassby Especial" data-price="150" data-image="12.jpeg">
                     <span class="badge">Nuevos colores</span>
                     <div class="product-image-container">
@@ -1667,8 +1664,8 @@
                         <div class="price-tag">C$150</div>
                     </div>
                     <div class="product-info">
-                        <h3 class="product-title">Copa Wassby Especial</h3>
-                        <p class="product-desc">Nuestra especialidad en capas de bizcocho suave y crema deliciosa, el postre perfecto de la casa para llevar.</p>
+                        <h3 class="product-title">Tres Leche en Vaso</h3>
+                        <p class="product-desc">Nuestra especialidad de bizcocho suave y crema deliciosa, el postre perfecto de la casa para llevar.</p>
                         <div class="card-actions">
                             <div class="qty-stepper" role="group" aria-label="Cantidad de Copa Wassby Especial">
                                 <button type="button" class="qty-btn" data-step="-1" aria-label="Quitar una unidad">−</button>
@@ -1816,7 +1813,7 @@
                 </div>
             </div>
 
-            <p class="footer-bottom-text">&copy; <span id="current-year">2025</span> Wassby Sweet. Todos los derechos reservados.</p>
+            <p class="footer-bottom-text">&copy; <span id="current-year">Adios 2026, hola 2027</span> Wassby Sweet. Compra en tu lugar favorito. Derechos reservados</p>
         </footer>
 
     </div>
@@ -1849,7 +1846,7 @@
 
         <footer class="cart-footer">
             <label class="cart-note-label" for="cart-note">Nota para tu pedido (opcional)</label>
-            <textarea id="cart-note" class="cart-note" rows="2" placeholder="Ej: para el sábado, nombre en la torta..."></textarea>
+            <textarea id="cart-note" class="cart-note" rows="2" placeholder="Como desea tu Postre? "></textarea>
 
             <div class="cart-total-row">
                 <span>Total</span>
@@ -2286,7 +2283,7 @@
                     var items = cartItems();
                     if (items.length === 0) return;
 
-                    var lines = ['¡Hola Wassby Sweet! 🧁 Quiero hacer este pedido:', ''];
+                    var lines = ['¡Hola Wassby Sweet! 🧁 Quiero hacerte un pedido:', ''];
 
                     items.forEach(function (it) {
                         var line = '• ' + it.qty + ' × ' + it.name;
