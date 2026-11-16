@@ -3,633 +3,1139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Repostería artesanal en Managua, Nicaragua. Tortas, postres en vaso, cupcakes y gelatinas hechas con amor.">
+    <meta name="theme-color" content="#f9f3ea">
     <title>Wassby Sweet - Catálogo Oficial</title>
 
-    <!-- Fuentes Elegantes de Google -->
+    <!-- Fuentes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
-
-    <!-- Íconos Premium FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
+        /* ============================================================
+           VARIABLES — paleta repostería premium
+           ============================================================ */
         :root {
-            /* --- Paleta refinada: cálida, más contraste, misma esencia artesanal --- */
-            --bg-color: #fdfbf7;
-            --text-dark: #3a2318;
-            --text-light: #7d6b5d;
-            --accent-pink: #c9727f;
-            --accent-pink-dark: #ab5865;
-            --card-bg: #ffffff;
+            --bg: #f9f3ea;
+            --bg-soft: #f3e7d8;
+            --surface: #fffdf9;
+            --text: #3b2a20;
+            --text-soft: #7f6a5c;
+            --text-muted: #a08b7c;
+            --rose: #cf7c88;
+            --rose-strong: #ae5a67;
+            --rose-deep: #964b58;
+            --rose-soft: #f7e3e2;
             --gold: #b8935f;
-            --gold-light: #ecdcc0;
-            --cream-alt: #f7ede1;
-            --footer-text: #e6dfd1;
-            --wpp-green: #25d366;
-            --wpp-green-dark: #1ebc59;
+            --gold-soft: #eadcc2;
+            --line: #efe2d4;
+            --green: #25d366;
+            --green-dark: #1ebc59;
+            --shadow-card: 0 10px 30px rgba(59, 42, 32, 0.08);
+            --radius-lg: 22px;
+            --radius-md: 16px;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
+        /* ============================================================
+           RESET Y BASE
+           ============================================================ */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; scroll-padding-top: 80px; }
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-dark);
-            background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(58,35,24,0.01) 10px, rgba(58,35,24,0.01) 11px);
+            background-color: var(--bg);
+            color: var(--text);
+            background-image: repeating-linear-gradient(
+                45deg, transparent, transparent 12px,
+                rgba(184, 147, 95, 0.03) 12px, rgba(184, 147, 95, 0.03) 13px
+            );
             -webkit-font-smoothing: antialiased;
+            position: relative;
+            min-height: 100vh;
         }
 
-        /* Mientras la entrada está visible, evitamos scroll y parpadeos de contenido */
-        body:not(.loaded) {
-            overflow: hidden;
-            height: 100vh;
-        }
+        body:not(.loaded) { overflow: hidden; height: 100vh; }
+        body.no-scroll { overflow: hidden; }
 
-        a {
-            cursor: pointer;
-        }
+        a { cursor: pointer; color: inherit; }
+        img { display: block; max-width: 100%; }
+        button { font-family: inherit; }
+        [hidden] { display: none !important; }
 
-        /* Foco visible para navegación por teclado */
         a:focus-visible,
-        .chip:focus-visible {
+        button:focus-visible,
+        .chip:focus-visible,
+        .dot:focus-visible {
             outline: 3px solid var(--gold);
             outline-offset: 3px;
         }
 
-        /* --- PANTALLA DE ENTRADA (SPLASH) --- */
-        #splash-screen {
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: radial-gradient(circle at 50% 40%, var(--cream-alt) 0%, var(--bg-color) 70%);
-            transition: opacity 0.7s ease, visibility 0.7s ease;
+        .sr-only {
+            position: absolute; width: 1px; height: 1px;
+            padding: 0; margin: -1px; overflow: hidden;
+            clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
         }
 
-        body.loaded #splash-screen {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
+        .skip-link {
+            position: absolute; top: -100px; left: 20px;
+            background: var(--text); color: white;
+            padding: 10px 16px; border-radius: 8px;
+            z-index: 10000; text-decoration: none;
+            font-weight: 600; transition: top 0.2s;
         }
+        .skip-link:focus { top: 20px; }
+
+        /* ============================================================
+           DECORACIÓN DE FONDO
+           ============================================================ */
+        .bakery-decorations {
+            position: fixed; inset: 0;
+            z-index: 0; pointer-events: none; overflow: hidden;
+        }
+        .bakery-item {
+            position: absolute;
+            animation: floatBakery 20s ease-in-out infinite;
+            will-change: transform, opacity;
+        }
+        .bakery-item:nth-child(1) { top: 8%;  left: 3%;   font-size: 4rem;   animation-delay: 0s;   color: var(--gold); }
+        .bakery-item:nth-child(2) { top: 25%; right: 4%;  font-size: 3rem;   animation-delay: 3s;   color: var(--rose); }
+        .bakery-item:nth-child(3) { top: 55%; left: 4%;   font-size: 3.5rem; animation-delay: 6s;   color: var(--gold); }
+        .bakery-item:nth-child(4) { bottom: 30%; right: 3%; font-size: 3.2rem; animation-delay: 9s; color: var(--rose); }
+        .bakery-item:nth-child(5) { bottom: 12%; left: 5%; font-size: 2.8rem; animation-delay: 12s; color: var(--gold); }
+        .bakery-item:nth-child(6) { top: 70%; right: 5%;  font-size: 2.5rem; animation-delay: 15s; color: var(--rose); }
+
+        @keyframes floatBakery {
+            0%, 100% { transform: translateY(0) rotate(-8deg); opacity: 0.04; }
+            50%      { transform: translateY(-25px) rotate(8deg); opacity: 0.08; }
+        }
+
+        /* ============================================================
+           SPLASH
+           ============================================================ */
+        #splash-screen {
+            position: fixed; inset: 0; z-index: 9999;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            background: radial-gradient(circle at 50% 40%, var(--bg-soft) 0%, var(--bg) 70%);
+            transition: opacity 0.7s ease, visibility 0.7s ease;
+            cursor: pointer;
+        }
+        body.loaded #splash-screen { opacity: 0; visibility: hidden; pointer-events: none; }
 
         .splash-logo-ring {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
+            width: 148px; height: 148px; border-radius: 50%;
             border: 2px dashed var(--gold);
-            padding: 6px;
-            background-color: white;
-            box-shadow: 0 10px 30px rgba(58,35,24,0.10);
+            padding: 6px; background-color: white;
+            box-shadow: 0 10px 30px rgba(59, 42, 32, 0.10);
             animation: splashPulse 2.2s ease-in-out infinite;
+            position: relative;
         }
-
-        .splash-logo-ring img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: contain;
+        .splash-logo-ring::before,
+        .splash-logo-ring::after {
+            content: '';
+            position: absolute; left: 50%; top: -12px;
+            width: 6px; height: 14px; border-radius: 50%;
+            background: radial-gradient(ellipse, rgba(184, 147, 95, 0.55), transparent 70%);
+            filter: blur(2px);
+            animation: steamRise 2.6s ease-out infinite;
+            transform: translateX(-50%);
         }
+        .splash-logo-ring::after { left: 30%; animation-delay: 1.3s; }
+        .splash-logo-ring img { width: 100%; height: 100%; border-radius: 50%; object-fit: contain; }
 
+        @keyframes steamRise {
+            0%   { opacity: 0; transform: translate(-50%, 0) scale(0.6); }
+            30%  { opacity: 0.7; }
+            100% { opacity: 0; transform: translate(-50%, -30px) scale(1.4); }
+        }
         @keyframes splashPulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 10px 30px rgba(58,35,24,0.10); }
-            50% { transform: scale(1.045); box-shadow: 0 16px 40px rgba(196,148,95,0.25); }
+            0%, 100% { transform: scale(1); box-shadow: 0 10px 30px rgba(59, 42, 32, 0.10); }
+            50%      { transform: scale(1.045); box-shadow: 0 16px 40px rgba(207, 124, 136, 0.22); }
         }
 
         .splash-brand {
             font-family: 'Playfair Display', serif;
-            font-size: 2.1rem;
-            font-weight: 700;
+            font-size: 2.1rem; font-weight: 700;
             margin-top: 24px;
-            opacity: 0;
-            transform: translateY(8px);
+            opacity: 0; transform: translateY(8px);
             animation: splashFadeUp 0.8s ease forwards 0.35s;
         }
-
         .splash-brand .sweet {
             font-family: 'Dancing Script', cursive;
-            color: var(--accent-pink);
-            font-weight: 600;
+            color: var(--rose); font-weight: 700;
             margin-left: 4px;
         }
-
         .splash-tagline {
-            font-size: 0.72rem;
-            letter-spacing: 3px;
+            font-size: 0.72rem; letter-spacing: 3px;
             text-transform: uppercase;
-            color: var(--text-light);
-            margin-top: 10px;
-            font-weight: 600;
+            color: var(--text-soft);
+            margin-top: 10px; font-weight: 600;
             opacity: 0;
             animation: splashFadeUp 0.8s ease forwards 0.55s;
         }
-
-        .splash-dots {
-            display: flex;
-            gap: 7px;
-            margin-top: 30px;
-        }
-
+        .splash-dots { display: flex; gap: 7px; margin-top: 30px; }
         .splash-dots span {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background-color: var(--gold);
+            width: 7px; height: 7px; border-radius: 50%;
+            background-color: var(--rose);
             animation: splashBounce 1.1s ease-in-out infinite;
         }
-
         .splash-dots span:nth-child(2) { animation-delay: 0.15s; }
         .splash-dots span:nth-child(3) { animation-delay: 0.3s; }
 
         @keyframes splashBounce {
             0%, 80%, 100% { transform: translateY(0); opacity: 0.5; }
-            40% { transform: translateY(-6px); opacity: 1; }
+            40%           { transform: translateY(-6px); opacity: 1; }
         }
-
-        @keyframes splashFadeUp {
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes splashFadeUp { to { opacity: 1; transform: translateY(0); } }
 
         .splash-skip {
-            position: absolute;
-            bottom: 30px;
-            font-size: 0.75rem;
-            color: var(--text-light);
-            letter-spacing: 0.5px;
-            opacity: 0;
+            position: absolute; bottom: 30px;
+            font-size: 0.75rem; color: var(--text-soft);
+            letter-spacing: 0.5px; opacity: 0;
             animation: splashFadeUp 0.8s ease forwards 1.1s;
         }
 
-        /* --- CONTENIDO PRINCIPAL (aparece tras la entrada) --- */
+        /* ============================================================
+           CONTENIDO PRINCIPAL
+           ============================================================ */
         #site-content {
-            opacity: 0;
-            transition: opacity 0.9s ease;
+            opacity: 0; transition: opacity 0.9s ease;
+            position: relative; z-index: 1;
+        }
+        body.loaded #site-content { opacity: 1; }
+
+        /* ============================================================
+           NAVBAR (SIEMPRE VISIBLE, SIN HAMBURGUESA)
+           ============================================================ */
+        .navbar {
+            position: sticky; top: 0; z-index: 900;
+            background: rgba(249, 243, 234, 0.92);
+            -webkit-backdrop-filter: blur(14px);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(184, 147, 95, 0.2);
+            transition: box-shadow 0.3s ease;
+        }
+        .navbar.scrolled { box-shadow: 0 8px 24px rgba(59, 42, 32, 0.08); }
+
+        .nav-inner {
+            max-width: 1200px; margin: 0 auto;
+            padding: 8px 16px;
+            display: flex; align-items: center;
+            gap: 14px; flex-wrap: wrap;
         }
 
-        body.loaded #site-content {
-            opacity: 1;
+        .nav-logo {
+            display: flex; align-items: center; gap: 10px;
+            text-decoration: none; flex-shrink: 0;
         }
-
-        @media (prefers-reduced-motion: reduce) {
-            #splash-screen, #site-content, .splash-logo-ring, .splash-brand,
-            .splash-tagline, .splash-dots span, .splash-skip {
-                animation: none !important;
-                transition: opacity 0.3s ease !important;
-            }
-            .splash-brand, .splash-tagline, .splash-skip { opacity: 1; transform: none; }
+        .nav-logo img {
+            width: 42px; height: 42px; border-radius: 50%;
+            object-fit: contain; background: white;
+            border: 1.5px dashed var(--gold); padding: 3px;
         }
-
-        /* --- LOGO Y ENCABEZADO --- */
-        .header {
-            text-align: center;
-            padding: 50px 20px 20px;
-        }
-
-        .logo-container {
-            width: 140px;
-            height: 140px;
-            margin: 0 auto 25px;
-            border-radius: 50%;
-            border: 2px dashed var(--gold);
-            padding: 5px;
-            background-color: white;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.04);
-            transition: transform 0.3s ease;
-        }
-
-        .logo-container:hover {
-            transform: scale(1.03);
-        }
-
-        .logo-container img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: contain;
-        }
-
-        .location-text {
-            font-size: 0.75rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--text-light);
-            margin-bottom: 12px;
-            font-weight: 600;
-        }
-
-        .brand-name {
+        .nav-logo-text {
             font-family: 'Playfair Display', serif;
-            font-size: 2.8rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-            letter-spacing: -0.5px;
+            font-size: 1.22rem; font-weight: 700;
+            letter-spacing: -0.3px; white-space: nowrap;
         }
-
-        .brand-name .sweet {
+        .nav-logo-text em {
             font-family: 'Dancing Script', cursive;
-            color: var(--accent-pink);
-            font-weight: 600;
-            margin-left: 5px;
+            font-style: normal; color: var(--rose);
+            font-weight: 700; font-size: 1.3rem;
         }
 
-        .quote {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            color: var(--text-dark);
-            font-size: 1.15rem;
-        }
-
-        .quote span {
-            color: var(--gold);
-            font-weight: bold;
-            font-size: 1.4rem;
-        }
-
-        /* --- INTRO SECCIÓN --- */
-        .intro-section {
-            text-align: center;
-            padding: 30px 20px 10px;
-        }
-
-        .intro-subtitle {
-            font-family: 'Dancing Script', cursive;
-            color: var(--accent-pink);
-            font-size: 1.6rem;
-            margin-bottom: 8px;
-        }
-
-        .intro-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.4rem;
-            font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: 15px;
-        }
-
-        .intro-title span {
-            font-style: italic;
-            color: var(--gold);
-        }
-
-        .intro-desc {
-            color: var(--text-light);
-            font-size: 0.95rem;
-            line-height: 1.6;
-            max-width: 440px;
-            margin: 0 auto;
-        }
-
-        /* --- CHIPS INTERACTIVOS --- */
-        .categories-container {
+        /* Enlaces de navegación siempre visibles */
+        .nav-links {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 12px;
-            padding: 30px 20px;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .chip {
-            background-color: var(--card-bg);
-            border: 1px solid #efe8df;
-            padding: 10px 18px;
-            border-radius: 25px;
-            font-size: 0.88rem;
-            color: var(--text-dark);
-            font-weight: 600;
-            display: flex;
             align-items: center;
+            gap: 4px 14px;
+            list-style: none;
+            margin: 0;
+            padding: 4px 0;
+            flex: 1 1 100%;
+            order: 3;
+            border-top: 1px solid rgba(184, 147, 95, 0.15);
+            padding-top: 8px;
+        }
+        @media (min-width: 768px) {
+            .nav-inner { flex-wrap: nowrap; padding: 0 20px; height: 68px; }
+            .nav-links {
+                flex: 1 1 auto;
+                order: initial;
+                border-top: none;
+                padding-top: 0;
+                justify-content: center;
+                gap: 6px 18px;
+            }
+        }
+
+        .nav-link {
+            position: relative;
+            display: block;
+            text-decoration: none;
+            font-size: 0.7rem; font-weight: 600;
+            letter-spacing: 1.4px; text-transform: uppercase;
+            color: var(--text-soft);
+            padding: 6px 2px;
+            transition: color 0.2s;
+            white-space: nowrap;
+        }
+        .nav-link:hover { color: var(--rose-strong); }
+        .nav-link.active { color: var(--rose-strong); }
+        .nav-link::after {
+            content: '';
+            position: absolute; left: 2px; right: 2px; bottom: 0;
+            height: 2px; border-radius: 2px;
+            background: var(--rose);
+            transform: scaleX(0); transform-origin: left;
+            transition: transform 0.25s ease;
+        }
+        .nav-link.active::after, .nav-link:hover::after { transform: scaleX(1); }
+
+        /* Acciones de la derecha: redes + carrito + pedir ahora */
+        .nav-actions {
+            display: flex; align-items: center;
             gap: 8px;
+            margin-left: auto;
+            flex-shrink: 0;
+        }
+
+        .nav-social {
+            display: flex; align-items: center; gap: 5px;
+        }
+        .nav-social a {
+            width: 34px; height: 34px; border-radius: 50%;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            color: var(--text-soft);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: background 0.2s, color 0.2s, transform 0.2s;
+        }
+        .nav-social a:hover {
+            background: var(--rose-soft);
+            color: var(--rose-deep);
+            border-color: var(--rose);
+            transform: translateY(-1px);
+        }
+        @media (max-width: 600px) {
+            .nav-social { display: none; } /* en móvil muy pequeño se ocultan para no saturar */
+        }
+
+        .btn-order-now {
+            display: none;
+            align-items: center; gap: 6px;
+            background: var(--rose-strong);
+            color: #fff;
+            font-weight: 700; font-size: 0.72rem;
+            letter-spacing: 0.8px; text-transform: uppercase;
+            padding: 10px 16px;
+            border-radius: 999px;
+            border: none;
+            text-decoration: none;
+            white-space: nowrap;
+            box-shadow: 0 6px 16px rgba(174, 90, 103, 0.3);
+            transition: background 0.2s, transform 0.2s;
+        }
+        .btn-order-now:hover { background: var(--rose-deep); transform: translateY(-1px); }
+        .btn-order-now i { font-size: 0.8rem; }
+        @media (min-width: 768px) {
+            .btn-order-now { display: inline-flex; }
+        }
+
+        .cart-btn {
+            position: relative;
+            width: 44px; height: 44px; border-radius: 50%;
+            border: 1px solid var(--line);
+            background: var(--surface);
+            color: var(--text);
+            font-size: 1.05rem;
+            display: flex; align-items: center; justify-content: center;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            user-select: none;
+            transition: background 0.2s, color 0.2s, transform 0.2s, border-color 0.2s;
+            box-shadow: 0 4px 12px rgba(59, 42, 32, 0.06);
+        }
+        .cart-btn:hover {
+            background: var(--rose-soft);
+            color: var(--rose-deep);
+            border-color: var(--rose);
+            transform: translateY(-1px);
         }
 
-        .chip i {
-            color: var(--accent-pink);
-            font-size: 1rem;
+        .cart-badge {
+            position: absolute; top: -3px; right: -3px;
+            min-width: 20px; height: 20px; padding: 0 5px;
+            border-radius: 999px;
+            background: var(--rose-strong);
+            color: white;
+            font-size: 0.68rem; font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+            border: 2px solid var(--bg);
+            line-height: 1;
+        }
+        .cart-badge.pop { animation: badgePop 0.4s ease; }
+        @keyframes badgePop {
+            0% { transform: scale(1); }
+            45% { transform: scale(1.35); }
+            100% { transform: scale(1); }
         }
 
-        .chip .count {
-            background-color: var(--cream-alt);
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: 500;
-            color: var(--text-dark);
+        /* ============================================================
+           HERO
+           ============================================================ */
+        .hero { padding: 44px 20px 24px; }
+        .hero-inner {
+            max-width: 1140px; margin: 0 auto;
+            display: grid; grid-template-columns: 1fr;
+            gap: 42px; align-items: center;
         }
 
-        .chip:hover {
+        .hero-eyebrow {
+            font-family: 'Dancing Script', cursive;
+            color: var(--rose); font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: clamp(2.3rem, 6.4vw, 3.9rem);
+            line-height: 1.02;
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        .hero-title span { color: var(--rose); display: block; }
+
+        .hero-desc {
+            color: var(--text-soft);
+            font-size: 0.98rem; line-height: 1.7;
+            max-width: 440px; margin-bottom: 26px;
+        }
+
+        .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 30px; }
+
+        .btn-primary {
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+            background: var(--rose-strong); color: #fff;
+            font-weight: 700; font-size: 0.92rem; letter-spacing: 0.3px;
+            padding: 15px 28px; border-radius: 999px; border: none;
+            text-decoration: none; cursor: pointer;
+            box-shadow: 0 10px 24px rgba(174, 90, 103, 0.35);
+            transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+        }
+        .btn-primary:hover {
+            background: var(--rose-deep);
             transform: translateY(-2px);
-            border-color: var(--gold);
+            box-shadow: 0 14px 30px rgba(174, 90, 103, 0.42);
         }
+        .btn-primary:active { transform: scale(0.98); }
 
-        .chip.active {
-            background-color: var(--text-dark);
-            color: white;
-            border-color: var(--text-dark);
-            box-shadow: 0 8px 15px rgba(58,35,24,0.15);
+        .btn-outline {
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+            padding: 14px 26px; border-radius: 999px;
+            border: 1.5px solid var(--gold);
+            color: var(--text); background: transparent;
+            font-weight: 600; font-size: 0.92rem;
+            text-decoration: none; cursor: pointer;
+            transition: background 0.2s, transform 0.2s, border-color 0.2s;
         }
+        .btn-outline:hover { background: var(--gold-soft); transform: translateY(-2px); }
+        .btn-outline i { color: var(--green-dark); font-size: 1.1rem; }
 
-        .chip.active i {
+        .hero-features {
+            display: flex; flex-wrap: wrap; gap: 12px 22px;
+        }
+        .hero-feature {
+            display: flex; align-items: center; gap: 10px;
+            font-size: 0.78rem; font-weight: 600;
+            letter-spacing: 0.6px; text-transform: uppercase;
+            color: var(--text-soft);
+        }
+        .hero-feature i {
+            width: 36px; height: 36px; border-radius: 50%;
+            background: var(--surface);
+            border: 1px solid var(--line);
             color: var(--gold);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.95rem;
         }
 
-        .chip.active .count {
-            background-color: rgba(255, 255, 255, 0.2);
-            color: white;
+        .hero-media { position: relative; }
+        .hero-img-wrap {
+            border-radius: 28px; overflow: hidden;
+            border: 1px solid var(--line);
+            box-shadow: 0 26px 55px rgba(59, 42, 32, 0.16);
+            aspect-ratio: 4 / 3.4;
+            background: var(--bg-soft);
+        }
+        .hero-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+
+        .hero-badge {
+            position: absolute; left: 6px; bottom: 18px;
+            width: 112px; height: 112px; border-radius: 50%;
+            background: var(--rose-soft);
+            border: 1.5px dashed var(--rose);
+            display: flex; align-items: center; justify-content: center;
+            text-align: center;
+            transform: rotate(-8deg);
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.05rem; line-height: 1.1;
+            color: var(--rose-deep);
+            box-shadow: 0 12px 26px rgba(174, 90, 103, 0.22);
+        }
+        .hero-badge em { font-style: normal; font-size: 1.35rem; display: block; }
+
+        /* ============================================================
+           SECCIÓN MENÚ
+           ============================================================ */
+        .section-head {
+            text-align: center;
+            padding: 64px 20px 6px;
+            max-width: 720px; margin: 0 auto;
+        }
+        .section-eyebrow {
+            font-family: 'Dancing Script', cursive;
+            color: var(--rose); font-size: 1.45rem;
+            margin-bottom: 6px;
+        }
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.85rem, 4.2vw, 2.6rem);
+            font-weight: 700; letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .section-sub {
+            margin-top: 12px;
+            color: var(--text-soft);
+            font-size: 0.92rem; line-height: 1.65;
+            max-width: 460px; margin-left: auto; margin-right: auto;
         }
 
-        /* --- CUADRÍCULA DE PRODUCTOS --- */
+        /* ============================================================
+           GRID Y TARJETAS
+           ============================================================ */
         .products-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 35px;
-            padding: 20px;
-            max-width: 500px;
-            margin: 0 auto 50px;
+            display: grid; grid-template-columns: 1fr;
+            gap: 28px; padding: 34px 20px 20px;
+            max-width: 520px; margin: 0 auto;
         }
 
         .product-card {
             position: relative;
-            background-color: var(--card-bg);
-            border-radius: 24px;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--line);
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(58,35,24,0.06);
+            display: flex; flex-direction: column;
+            box-shadow: 0 6px 18px rgba(59, 42, 32, 0.05);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
         .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(58,35,24,0.12);
+            transform: translateY(-4px);
+            box-shadow: 0 18px 38px rgba(59, 42, 32, 0.11);
+        }
+        .product-card.hidden { display: none; }
+        .product-card.reveal { animation: cardReveal 0.45s cubic-bezier(0.4, 0, 0.2, 1); }
+
+        @keyframes cardReveal {
+            from { opacity: 0; transform: translateY(15px) scale(0.98); }
+            to   { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        .product-card.hidden {
-            display: none;
-        }
-
+        /* Badge */
         .badge {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            z-index: 2;
-            background-color: var(--accent-pink);
+            position: absolute; top: 14px; left: 14px;
+            z-index: 6;
+            background: var(--rose-strong);
             color: white;
-            font-size: 0.7rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            padding: 6px 14px;
-            border-radius: 20px;
-            box-shadow: 0 4px 10px rgba(171,88,101,0.35);
+            font-size: 0.68rem; font-weight: 700;
+            letter-spacing: 0.6px; text-transform: uppercase;
+            padding: 6px 14px; border-radius: 999px;
+            box-shadow: 0 4px 10px rgba(174, 90, 103, 0.35);
+            overflow: hidden;
+        }
+        .badge::after {
+            content: '';
+            position: absolute; top: 0; left: -120%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+            animation: badgeShine 3.5s ease-in-out infinite;
+        }
+        @keyframes badgeShine {
+            0%, 40%   { left: -120%; }
+            70%, 100% { left: 120%; }
         }
 
+        /* Imagen y galería */
         .product-image-container {
             position: relative;
-            height: 320px;
-            width: 100%;
-            background-color: var(--cream-alt);
+            height: 300px; width: 100%;
+            background-color: var(--bg-soft);
+            overflow: hidden;
         }
+        .product-image-container > img {
+            width: 100%; height: 100%;
+            object-fit: cover; object-position: center;
+            transition: transform 0.6s ease;
+        }
+        .product-card:hover .product-image-container > img { transform: scale(1.04); }
 
-        .product-image-container img {
-            width: 100%;
+        .product-gallery { position: relative; overflow: hidden; height: 100%; width: 100%; }
+        .gallery-track {
+            display: flex;
+            transition: transform 0.35s ease;
             height: 100%;
-            object-fit: cover;
-            object-position: center;
+        }
+        .gallery-track img {
+            min-width: 100%; height: 100%;
+            object-fit: cover; object-position: center;
         }
 
+        .gallery-btn {
+            position: absolute; top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 253, 249, 0.9);
+            border: none; width: 34px; height: 34px;
+            border-radius: 50%; cursor: pointer;
+            font-size: 0.85rem; display: flex;
+            align-items: center; justify-content: center;
+            z-index: 5; color: var(--text);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+            transition: background 0.2s, transform 0.15s;
+        }
+        .gallery-btn:hover { background: white; transform: translateY(-50%) scale(1.08); }
+        .gallery-btn.prev { left: 10px; }
+        .gallery-btn.next { right: 10px; }
+
+        .gallery-dots {
+            position: absolute; bottom: 14px; left: 50%;
+            transform: translateX(-50%);
+            display: flex; gap: 6px; z-index: 5;
+        }
+        .gallery-dots .dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: rgba(255, 255, 255, 0.65);
+            cursor: pointer; transition: background 0.2s, transform 0.2s;
+            border: none; padding: 0;
+        }
+        .gallery-dots .dot.active { background: white; transform: scale(1.2); }
+
+        /* Precio */
         .price-tag {
-            position: absolute;
-            bottom: 15px;
-            right: 15px;
-            background-color: rgba(255, 255, 255, 0.95);
+            position: absolute; bottom: 14px; right: 14px;
+            background-color: rgba(255, 253, 249, 0.96);
+            -webkit-backdrop-filter: blur(4px);
             backdrop-filter: blur(4px);
-            color: var(--text-dark);
+            color: var(--rose-deep);
             font-family: 'Playfair Display', serif;
-            font-weight: 700;
-            font-size: 1.15rem;
-            padding: 8px 22px;
-            border-radius: 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            border: 1px solid rgba(184,147,95,0.3);
+            font-weight: 700; font-size: 1.08rem;
+            padding: 7px 20px; border-radius: 999px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--gold-soft);
+            z-index: 6;
         }
 
+        /* Info producto */
         .product-info {
-            padding: 25px;
+            padding: 22px 20px 22px;
+            display: flex; flex-direction: column;
+            flex: 1;
         }
-
         .product-title {
             font-family: 'Playfair Display', serif;
-            font-size: 1.55rem;
-            margin-bottom: 10px;
-            color: var(--text-dark);
-            font-weight: 700;
+            font-size: 1.32rem; margin-bottom: 8px;
+            color: var(--text); font-weight: 700;
+            line-height: 1.25;
         }
-
         .product-desc {
-            color: var(--text-light);
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 22px;
-            min-height: 45px;
+            color: var(--text-soft); font-size: 0.88rem;
+            line-height: 1.6; margin-bottom: 18px;
         }
 
-        .btn-order {
-            display: block;
-            width: 100%;
-            background-color: var(--text-dark);
-            color: white;
-            text-align: center;
-            padding: 15px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 0.95rem;
-            letter-spacing: 0.5px;
-            transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
-            border: none;
-            outline: none;
-            box-shadow: 0 6px 16px rgba(58,35,24,0.18);
+        /* Acciones de tarjeta */
+        .card-actions {
+            display: flex; gap: 10px;
+            margin-top: auto; align-items: stretch;
         }
 
-        .btn-order:hover {
-            background-color: #4f3224;
-            box-shadow: 0 8px 20px rgba(58,35,24,0.25);
+        .qty-stepper {
+            display: flex; align-items: center;
+            border: 1.5px solid var(--line);
+            border-radius: 999px;
+            background: var(--surface);
+            overflow: hidden; flex-shrink: 0;
+        }
+        .qty-btn {
+            width: 34px; height: 44px;
+            border: none; background: transparent;
+            font-size: 1.1rem; color: var(--text);
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s, color 0.2s;
+            line-height: 1;
+        }
+        .qty-btn:hover:not(:disabled) { background: var(--rose-soft); color: var(--rose-deep); }
+        .qty-btn:disabled { opacity: 0.28; cursor: not-allowed; }
+        .qty-value {
+            min-width: 26px; text-align: center;
+            font-weight: 700; font-size: 0.95rem;
         }
 
-        .btn-order:active {
-            transform: scale(0.98);
+        .btn-add {
+            flex: 1;
+            border: none; border-radius: 999px;
+            background: var(--rose-strong); color: #fff;
+            font-weight: 700; font-size: 0.85rem;
+            display: flex; align-items: center; justify-content: center;
+            gap: 8px; padding: 0 14px;
+            cursor: pointer;
+            box-shadow: 0 8px 18px rgba(174, 90, 103, 0.3);
+            transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
         }
-
-        .btn-order i {
-            color: var(--wpp-green);
-            margin-right: 8px;
-            font-size: 1.2rem;
-            vertical-align: middle;
+        .btn-add:hover {
+            background: var(--rose-deep);
+            transform: translateY(-1px);
+            box-shadow: 0 12px 24px rgba(174, 90, 103, 0.38);
         }
+        .btn-add:active { transform: scale(0.97); }
 
-        /* CTA secundario: para "Consultar precio", visualmente distinto de "Pedir ahora"
-           para que el cliente entienda que es una consulta y no un pedido directo */
-        .btn-order.btn-secondary {
-            background-color: transparent;
-            color: var(--text-dark);
-            border: 2px solid var(--gold);
-            box-shadow: none;
+        /* ============================================================
+           FRANJA DE BENEFICIOS
+           ============================================================ */
+        .perks {
+            max-width: 1140px;
+            margin: 56px auto 0;
+            padding: 26px 20px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 18px 28px;
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
         }
-
-        .btn-order.btn-secondary:hover {
-            background-color: var(--gold);
-            color: white;
+        .perk { display: flex; align-items: center; gap: 12px; }
+        .perk-icon {
+            width: 44px; height: 44px; border-radius: 50%;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            color: var(--rose-strong);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem; flex-shrink: 0;
         }
-
-        .btn-order.btn-secondary:hover i {
-            color: white;
+        .perk strong {
+            display: block; font-size: 0.82rem;
+            letter-spacing: 0.4px; text-transform: uppercase;
+            margin-bottom: 2px;
         }
+        .perk small { color: var(--text-muted); font-size: 0.78rem; }
 
-        /* --- FOOTER --- */
+        /* ============================================================
+           FOOTER
+           ============================================================ */
         .footer {
-            background-color: var(--text-dark);
-            color: var(--bg-color);
-            padding: 60px 30px 110px 30px;
-            text-align: left;
-            margin-top: 80px;
+            background: var(--text);
+            color: var(--bg);
+            padding: 58px 26px 96px;
+            margin-top: 70px;
+            position: relative; z-index: 1;
         }
-
+        .footer-grid {
+            max-width: 1080px; margin: 0 auto;
+            display: grid; grid-template-columns: 1fr;
+            gap: 40px;
+        }
+        .footer-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.9rem; font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 14px;
+        }
+        .footer-brand em {
+            font-family: 'Dancing Script', cursive;
+            font-style: normal; color: var(--rose);
+            font-weight: 700; font-size: 2rem;
+        }
+        .footer-desc {
+            font-size: 0.92rem; line-height: 1.75;
+            color: rgba(249, 243, 234, 0.72);
+            max-width: 420px;
+            margin-bottom: 24px;
+        }
         .footer-title {
             font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-            color: var(--bg-color);
-            letter-spacing: -0.5px;
-        }
-
-        .footer-desc {
-            font-size: 0.95rem;
-            line-height: 1.7;
-            color: var(--footer-text);
-            margin-bottom: 40px;
-            max-width: 500px;
-        }
-
-        .footer-contact {
-            list-style: none;
-            margin-bottom: 40px;
-        }
-
-        .footer-contact li {
-            font-size: 1rem;
+            font-size: 1.05rem; font-weight: 600;
+            letter-spacing: 1.6px; text-transform: uppercase;
             margin-bottom: 18px;
-            display: flex;
-            align-items: center;
-            color: var(--footer-text);
+            color: var(--gold-soft);
         }
-
-        .footer-contact li i {
-            color: var(--gold);
-            width: 35px;
-            font-size: 1.2rem;
+        .footer-contact { list-style: none; }
+        .footer-contact li {
+            font-size: 0.92rem; margin-bottom: 14px;
+            display: flex; align-items: center;
+            color: rgba(249, 243, 234, 0.82);
         }
+        .footer-contact li i { color: var(--rose); width: 32px; font-size: 1rem; }
 
-        .footer-social-links {
-            display: flex;
-            gap: 15px;
-            justify-content: flex-start;
-        }
-
+        .footer-social-links { display: flex; gap: 12px; flex-wrap: wrap; }
         .footer-social-links a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: #4f3224;
-            color: var(--bg-color);
-            text-decoration: none;
-            font-size: 1.3rem;
-            transition: background-color 0.3s, transform 0.2s;
+            display: flex; align-items: center; justify-content: center;
+            width: 46px; height: 46px; border-radius: 50%;
+            background: rgba(255, 253, 249, 0.08);
+            color: var(--bg);
+            text-decoration: none; font-size: 1.15rem;
+            transition: background 0.3s, transform 0.2s, color 0.3s;
         }
-
         .footer-social-links a:hover {
-            background-color: var(--gold);
+            background: var(--rose);
+            color: #fff;
             transform: translateY(-3px);
         }
 
         .footer-bottom-text {
-            margin-top: 40px;
-            font-size: 0.75rem;
-            color: #8c7368;
+            max-width: 1080px;
+            margin: 44px auto 0;
+            padding-top: 22px;
+            border-top: 1px solid rgba(249, 243, 234, 0.12);
+            font-size: 0.74rem;
+            color: rgba(249, 243, 234, 0.45);
             letter-spacing: 0.5px;
+            text-align: center;
         }
 
-        /* --- BOTÓN FLOTANTE WHATSAPP (IZQUIERDA) --- */
+        /* ============================================================
+           WHATSAPP FLOTANTE
+           ============================================================ */
         .floating-wpp {
-            position: fixed;
-            bottom: 30px;
-            left: 20px;
-            background-color: var(--wpp-green);
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.1rem;
-            box-shadow: 0 5px 20px rgba(37,211,102,0.4);
-            z-index: 1000;
-            text-decoration: none;
+            position: fixed; bottom: 26px; left: 18px;
+            background-color: var(--green); color: white;
+            width: 58px; height: 58px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
+            z-index: 1000; text-decoration: none;
             transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+            animation: wppFloat 3s ease-in-out infinite;
         }
-
         .floating-wpp:hover {
-            background-color: var(--wpp-green-dark);
-            transform: scale(1.05);
-            box-shadow: 0 8px 25px rgba(37,211,102,0.5);
+            background-color: var(--green-dark);
+            transform: scale(1.06);
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
+        }
+        @keyframes wppFloat {
+            0%, 100% { transform: translateY(0); }
+            50%      { transform: translateY(-4px); }
         }
 
-        /* --- ADAPTACIÓN RESPONSIVA PANTALLAS GRANDES --- */
+        /* ============================================================
+           CARRITO (DRAWER)
+           ============================================================ */
+        .cart-overlay {
+            position: fixed; inset: 0;
+            background: rgba(43, 28, 20, 0.45);
+            -webkit-backdrop-filter: blur(2px);
+            backdrop-filter: blur(2px);
+            opacity: 0; visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 1100;
+        }
+        .cart-overlay.visible { opacity: 1; visibility: visible; }
+
+        .cart-drawer {
+            position: fixed; top: 0; right: 0; bottom: 0;
+            width: min(430px, 100%);
+            background: var(--bg);
+            z-index: 1200;
+            display: flex; flex-direction: column;
+            transform: translateX(105%);
+            visibility: hidden;
+            transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.38s;
+            box-shadow: -24px 0 60px rgba(59, 42, 32, 0.18);
+        }
+        .cart-drawer.open { transform: translateX(0); visibility: visible; }
+
+        .cart-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 18px 20px;
+            border-bottom: 1px solid var(--line);
+            background: var(--surface);
+        }
+        .cart-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem; font-weight: 700;
+        }
+        .cart-title span { color: var(--rose-strong); font-size: 1rem; }
+        .cart-close {
+            width: 40px; height: 40px; border-radius: 50%;
+            border: 1px solid var(--line);
+            background: var(--bg); color: var(--text);
+            font-size: 1rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s, color 0.2s;
+        }
+        .cart-close:hover { background: var(--rose-soft); color: var(--rose-deep); }
+
+        .cart-body {
+            flex: 1; overflow-y: auto;
+            padding: 16px 20px 8px;
+        }
+
+        .cart-empty {
+            height: 100%;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            text-align: center; gap: 8px;
+            padding: 30px 10px;
+            color: var(--text-soft);
+        }
+        .cart-empty i {
+            font-size: 2.4rem; color: var(--rose);
+            margin-bottom: 8px;
+        }
+        .cart-empty p {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem; font-weight: 600; color: var(--text);
+        }
+        .cart-empty span { font-size: 0.85rem; max-width: 240px; line-height: 1.6; }
+        .cart-empty .btn-primary { margin-top: 14px; padding: 12px 24px; font-size: 0.85rem; }
+
+        .cart-items { display: flex; flex-direction: column; gap: 12px; }
+
+        .cart-item {
+            display: flex; gap: 12px;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 10px;
+            animation: cartItemIn 0.25s ease;
+        }
+        @keyframes cartItemIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .cart-item-img {
+            width: 64px; height: 64px;
+            border-radius: 10px;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-soft);
+        }
+        .cart-item-info { flex: 1; min-width: 0; }
+        .cart-item-name {
+            font-size: 0.86rem; font-weight: 700;
+            line-height: 1.3; margin-bottom: 3px;
+        }
+        .cart-item-price {
+            font-size: 0.74rem; color: var(--text-muted);
+            margin-bottom: 7px;
+        }
+        .cart-item-qty {
+            display: inline-flex; align-items: center; gap: 6px;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            padding: 1px 3px;
+            background: var(--bg);
+        }
+        .cq-btn {
+            width: 24px; height: 24px; border-radius: 50%;
+            border: none; background: transparent;
+            color: var(--text); font-size: 0.9rem;
+            cursor: pointer; line-height: 1;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s, color 0.2s;
+        }
+        .cq-btn:hover { background: var(--rose-soft); color: var(--rose-deep); }
+        .cq-value { min-width: 20px; text-align: center; font-size: 0.82rem; font-weight: 700; }
+
+        .cart-item-right {
+            display: flex; flex-direction: column;
+            align-items: flex-end; justify-content: space-between;
+            gap: 6px;
+        }
+        .cart-item-subtotal {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.95rem; font-weight: 700;
+            color: var(--rose-deep); white-space: nowrap;
+        }
+        .cart-item-subtotal.muted { color: var(--text-muted); font-family: 'Montserrat', sans-serif; font-size: 0.9rem; }
+        .cart-remove {
+            width: 28px; height: 28px; border-radius: 50%;
+            border: none; background: transparent;
+            color: var(--text-muted); font-size: 0.8rem;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s, color 0.2s;
+        }
+        .cart-remove:hover { background: var(--rose-soft); color: var(--rose-deep); }
+
+        .cart-footer {
+            border-top: 1px solid var(--line);
+            background: var(--surface);
+            padding: 16px 20px 18px;
+        }
+        .cart-note-label {
+            display: block;
+            font-size: 0.7rem; font-weight: 700;
+            letter-spacing: 1.2px; text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+        .cart-note {
+            width: 100%;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            background: var(--bg);
+            padding: 10px 12px;
+            font-family: inherit; font-size: 0.84rem;
+            color: var(--text);
+            resize: vertical; min-height: 46px;
+            margin-bottom: 14px;
+        }
+        .cart-note:focus { outline: 2px solid var(--rose); outline-offset: 1px; }
+
+        .cart-total-row {
+            display: flex; align-items: baseline; justify-content: space-between;
+            margin-bottom: 4px;
+        }
+        .cart-total-row span {
+            font-size: 0.8rem; font-weight: 700;
+            letter-spacing: 1.2px; text-transform: uppercase;
+            color: var(--text-soft);
+        }
+        .cart-total-row strong {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem; font-weight: 700;
+            color: var(--text);
+        }
+        .cart-total-hint {
+            font-size: 0.72rem; color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .btn-checkout {
+            width: 100%;
+            margin-top: 10px;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            background: var(--green); color: #fff;
+            border: none; border-radius: 999px;
+            padding: 15px;
+            font-weight: 700; font-size: 0.95rem;
+            cursor: pointer;
+            box-shadow: 0 10px 24px rgba(37, 211, 102, 0.32);
+            transition: background 0.2s, transform 0.15s, box-shadow 0.2s, opacity 0.2s;
+        }
+        .btn-checkout i { font-size: 1.15rem; }
+        .btn-checkout:hover:not(:disabled) {
+            background: var(--green-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 14px 30px rgba(37, 211, 102, 0.4);
+        }
+        .btn-checkout:disabled {
+            opacity: 0.45; cursor: not-allowed; box-shadow: none;
+        }
+
+        .cart-small {
+            text-align: center;
+            font-size: 0.7rem; color: var(--text-muted);
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+        .cart-clear {
+            display: block;
+            margin: 8px auto 0;
+            background: none; border: none;
+            color: var(--text-muted);
+            font-size: 0.74rem;
+            text-decoration: underline;
+            cursor: pointer;
+            padding: 4px;
+        }
+        .cart-clear:hover { color: var(--rose-deep); }
+
+        /* ============================================================
+           TOAST
+           ============================================================ */
+        .toast {
+            position: fixed; left: 50%; bottom: 96px;
+            transform: translate(-50%, 16px);
+            background: var(--text); color: #fff;
+            padding: 12px 22px; border-radius: 999px;
+            font-size: 0.85rem; font-weight: 600;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 3000;
+            box-shadow: 0 12px 30px rgba(59, 42, 32, 0.32);
+            max-width: calc(100vw - 36px);
+            text-align: center;
+        }
+        .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+        /* ============================================================
+           RESPONSIVE
+           ============================================================ */
+        @media (min-width: 640px) {
+            .perks { grid-template-columns: repeat(2, 1fr); }
+        }
+
         @media (min-width: 768px) {
-            .brand-name { font-size: 3.5rem; }
             .products-grid {
                 grid-template-columns: repeat(2, 1fr);
-                max-width: 950px;
+                max-width: 820px;
             }
-            .footer {
-                padding-left: 15%;
-            }
+            .hero-img-wrap { aspect-ratio: 4 / 3; }
+        }
+
+        @media (min-width: 920px) {
+            .hero { padding: 66px 20px 30px; }
+            .hero-inner { grid-template-columns: 1.05fr 0.95fr; gap: 56px; }
+            .hero-img-wrap { aspect-ratio: 4 / 4.1; }
+            .hero-badge { left: -26px; bottom: 34px; width: 124px; height: 124px; }
+            .footer-grid { grid-template-columns: 1.3fr 1fr 1fr; }
         }
 
         @media (min-width: 1200px) {
             .products-grid {
                 grid-template-columns: repeat(3, 1fr);
-                max-width: 1200px;
+                max-width: 1180px;
             }
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            .splash-brand, .splash-tagline, .splash-skip { opacity: 1; transform: none; }
         }
     </style>
 </head>
 <body>
 
-    <!-- PANTALLA DE ENTRADA -->
-    <div id="splash-screen" role="status" aria-label="Cargando Wassby Sweet">
+    <a href="#menu" class="skip-link">Saltar al menú</a>
+
+    <!-- DECORACIÓN DE FONDO -->
+    <div class="bakery-decorations" aria-hidden="true">
+        <i class="fa-solid fa-cake-candles bakery-item"></i>
+        <i class="fa-solid fa-cookie-bite bakery-item"></i>
+        <i class="fa-solid fa-ice-cream bakery-item"></i>
+        <i class="fa-solid fa-croissant bakery-item"></i>
+        <i class="fa-solid fa-candy bakery-item"></i>
+        <i class="fa-solid fa-stroopwafel bakery-item"></i>
+    </div>
+
+    <!-- SPLASH -->
+    <div id="splash-screen" role="status" aria-label="Cargando Wassby Sweet" tabindex="0">
         <div class="splash-logo-ring">
             <img src="logo.jpg" alt="Wassby Sweet Logo">
         </div>
-        <h1 class="splash-brand">Wassby <span class="sweet">Sweet</span></h1>
+        <p class="splash-brand">Wassby <span class="sweet">Sweet</span></p>
         <p class="splash-tagline">Repostería artesanal</p>
         <div class="splash-dots" aria-hidden="true">
             <span></span><span></span><span></span>
@@ -639,341 +1145,1191 @@
 
     <div id="site-content">
 
-        <!-- BOTÓN FLOTANTE DE WHATSAPP -->
-        <a href="https://wa.me/50585140940" class="floating-wpp" target="_blank" rel="noopener noreferrer" aria-label="Escríbenos por WhatsApp" title="Escríbenos directamente">
-            <i class="fa-brands fa-whatsapp"></i>
-        </a>
+        <!-- ==================== NAVBAR ==================== -->
+        <header class="navbar" id="navbar">
+            <div class="nav-inner">
+                <a href="#top" class="nav-logo" aria-label="Wassby Sweet - Inicio">
+                    <img src="logo.jpg" alt="Wassby Sweet Logo">
+                    <span class="nav-logo-text">Wassby <em>Sweet</em></span>
+                </a>
 
-        <!-- ENCABEZADO -->
-        <header class="header">
-            <div class="logo-container">
-                <img src="logo.jpg" alt="Wassby Sweet Logo">
+                <nav class="nav-links" aria-label="Categorías de postres">
+                    <a href="#menu" class="nav-link active" data-target="all" aria-current="true">Todo</a>
+                    <a href="#menu" class="nav-link" data-target="vaso">Vasos</a>
+                    <a href="#menu" class="nav-link" data-target="tortas">Tortas</a>
+                    <a href="#menu" class="nav-link" data-target="cupcakes">Cupcakes</a>
+                    <a href="#menu" class="nav-link" data-target="tradicional">Gelatinas</a>
+                    <a href="#contacto" class="nav-link">Contacto</a>
+                </nav>
+
+                <div class="nav-actions">
+                    <!-- Redes sociales en la barra (enlaces actualizados) -->
+                    <div class="nav-social" aria-label="Redes sociales">
+                        <a href="https://www.instagram.com/wassby_sweet?cplk=aG9zYTNkd3Vmc3Q=" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <a href="https://www.tiktok.com/@wassby_sweet?_r=1&_t=ZS-9BRhAGPSKCW" target="_blank" rel="noopener noreferrer" aria-label="TikTok" title="TikTok">
+                            <i class="fa-brands fa-tiktok"></i>
+                        </a>
+                        <a href="https://wa.me/50585140940" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" title="WhatsApp">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </a>
+                    </div>
+
+                    <!-- Botón Pedir ahora (estilo imagen) -->
+                    <a href="#menu" class="btn-order-now">
+                        Pedir ahora <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+
+                    <!-- Carrito -->
+                    <button type="button" class="cart-btn" id="cart-open-btn" aria-label="Abrir carrito de compras">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        <span class="cart-badge" id="cart-badge" hidden>0</span>
+                    </button>
+                </div>
             </div>
-            <div class="location-text">REPOSTERÍA ARTESANAL · MANAGUA, NICARAGUA</div>
-            <h1 class="brand-name">Wassby <span class="sweet">Sweet</span></h1>
-            <p class="quote"><span>“</span> Un pedacito de cielo en cada bocado. <span>”</span></p>
         </header>
 
-        <!-- INTRODUCCIÓN -->
-        <section class="intro-section">
-            <div class="intro-subtitle">— Nuestro Menú</div>
-            <h2 class="intro-title">Endulzamos <span>tus<br>momentos</span></h2>
-            <p class="intro-desc">Toca <strong>Pedir ahora</strong> para ordenar directo por WhatsApp, o <strong>Consultar precio</strong> si necesitas más detalles antes de decidir. Hacemos pedidos personalizados.</p>
+        <!-- ==================== HERO ==================== -->
+        <section class="hero" id="top">
+            <div class="hero-inner">
+                <div class="hero-copy">
+                    <p class="hero-eyebrow">Hecho con amor ♡</p>
+                    <h1 class="hero-title">Hecho fresco.<span>Hecho para ti.</span></h1>
+                    <p class="hero-desc">
+                        Tortas, postres en vaso, cupcakes y gelatinas artesanales, preparados con
+                        ingredientes de la mejor calidad y mucho cariño en Managua, Nicaragua.
+                    </p>
+                    <div class="hero-cta">
+                        <a href="#menu" class="btn-primary">Ver el menú <i class="fa-solid fa-arrow-right"></i></a>
+                        <a href="https://wa.me/50585140940" class="btn-outline" target="_blank" rel="noopener noreferrer">
+                            <i class="fa-brands fa-whatsapp"></i> Escríbenos
+                        </a>
+                    </div>
+                    <div class="hero-features">
+                        <div class="hero-feature"><i class="fa-solid fa-seedling"></i><span>100% Artesanal</span></div>
+                        <div class="hero-feature"><i class="fa-solid fa-wheat-awn"></i><span>Ingredientes premium</span></div>
+                        <div class="hero-feature"><i class="fa-regular fa-heart"></i><span>Hecho a pedido</span></div>
+                    </div>
+                </div>
+                <div class="hero-media">
+                    <div class="hero-img-wrap">
+                        <img src="18.jpeg" alt="Torta de chocolate artesanal de Wassby Sweet">
+                    </div>
+                    <div class="hero-badge" aria-hidden="true">
+                        <span>Hecho con<br><em>amor</em> ♡</span>
+                    </div>
+                </div>
+            </div>
         </section>
 
-        <!-- BARRA INTERACTIVA DE CATEGORÍAS -->
-        <nav class="categories-container">
-            <div class="chip active" data-target="all" role="button" tabindex="0">
-                <i class="fa-solid fa-cookie"></i> Todos <span class="count">14</span>
+        <!-- ==================== MENÚ ==================== -->
+        <main>
+            <div class="section-head" id="menu">
+                <p class="section-eyebrow">Hecho a pedido ♡</p>
+                <h2 class="section-title">Nuestros postres</h2>
+                <p class="section-sub">
+                    Elige tus favoritos, ajusta la cantidad (máx. 10 por producto) y agrégalos al carrito.
+                    Al finalizar, tu pedido completo se envía directo por WhatsApp.
+                </p>
             </div>
-            <div class="chip" data-target="vaso" role="button" tabindex="0">
-                <i class="fa-solid fa-ice-cream"></i> Postres en Vaso <span class="count">6</span>
-            </div>
-            <div class="chip" data-target="tortas" role="button" tabindex="0">
-                <i class="fa-solid fa-cake-candles"></i> Tortas <span class="count">5</span>
-            </div>
-            <div class="chip" data-target="cupcakes" role="button" tabindex="0">
-                <i class="fa-solid fa-mug-hot"></i> Cupcakes <span class="count">1</span>
-            </div>
-            <div class="chip" data-target="tradicional" role="button" tabindex="0">
-                <i class="fa-solid fa-heart"></i> Tradicional / Gelatinas <span class="count">2</span>
-            </div>
-        </nav>
 
-        <!-- GRILLA DE PRODUCTOS -->
-        <main class="products-grid">
+            <p class="sr-only" aria-live="polite" id="filter-status">Mostrando todos los productos</p>
 
-            <!-- Producto 1 -->
-            <article class="product-card" data-category="vaso">
-                <div class="product-image-container">
-                    <img src="1.jpeg" alt="Postre Mosaico">
-                    <div class="price-tag">C$110</div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">Mosaico</h3>
-                    <p class="product-desc">Textura increíblemente suave y cremosa. Capas de felicidad listas para alegrar tu día en una presentación práctica.</p>
-                    <a href="https://wa.me/50585140940?text=Hola!%20Quiero%20ordenar%20un%20Mosaico" class="btn-order" target="_blank" rel="noopener noreferrer">
-                        <i class="fa-brands fa-whatsapp"></i> Pedir ahora
-                    </a>
-                </div>
-            </article>
+            <section class="products-grid" aria-label="Catálogo de productos">
 
-            <!-- Producto 2 -->
-            <article class="product-card" data-category="tradicional">
-                <div class="product-image-container">
-                    <img src="2.jpeg" alt="Gelatina Tres Leches" loading="lazy">
-                    <div class="price-tag">C$600</div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">Gelatina Tres Leches</h3>
-                    <p class="product-desc">La suavidad perfecta hecha postre. El toque elegante y tradicional para compartir en familia.</p>
-                    <a href="https://wa.me/50585140940?text=Hola!%20Quiero%20ordenar%20una%20Gelatina%20Tres%20Leches" class="btn-order" target="_blank" rel="noopener noreferrer">
-                        <i class="fa-brands fa-whatsapp"></i> Pedir ahora
-                    </a>
-                </div>
-            </article>
+                <!-- 1. Cheesecake -->
+                <article class="product-card" data-category="vaso" data-id="cheesecake" data-name="Cheesecake" data-price="100" data-image="22.jpeg">
+                    <span class="badge">Nuevo</span>
+                    <div class="product-image-container">
+                        <div class="product-gallery">
+                            <div class="gallery-track">
+                                <img src="22.jpeg" alt="Cheesecake - vista 1">
+                                <img src="22.1.jpeg" alt="Cheesecake - vista 2" loading="lazy">
+                            </div>
+                            <button type="button" class="gallery-btn prev" aria-label="Imagen anterior"><i class="fa-solid fa-chevron-left"></i></button>
+                            <button type="button" class="gallery-btn next" aria-label="Siguiente imagen"><i class="fa-solid fa-chevron-right"></i></button>
+                            <div class="gallery-dots">
+                                <button type="button" class="dot active" aria-label="Ir a imagen 1"></button>
+                                <button type="button" class="dot" aria-label="Ir a imagen 2"></button>
+                            </div>
+                        </div>
+                        <div class="price-tag">C$100</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Cheesecake</h3>
+                        <p class="product-desc">Cremoso cheesecake artesanal con trocitos de galleta de chocolate, servido en práctico vaso para disfrutar en cualquier momento.</p>
+                        <div class="card-actions">
+                            <div class="qty-stepper" role="group" aria-label="Cantidad de Cheesecake">
+                                <button type="button" class="qty-btn" data-step="-1" aria-label="Quitar una unidad">−</button>
+                                <span class="qty-value">1</span>
+                                <button type="button" class="qty-btn" data-step="1" aria-label="Añadir una unidad">+</button>
+                            </div>
+                            <button type="button" class="btn-add"><i class="fa-solid fa-bag-shopping"></i> Agregar</button>
+                        </div>
+                    </div>
+                </article>
 
-            <!-- Producto 3 -->
-            <article class="product-card" data-category="tortas">
-                <div class="product-image-container">
-                    <img src="3.jpeg" alt="Torta de Atolillo" loading="lazy">
-                    <div class="price-tag">C$120</div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">Torta de Atolillo</h3>
-                    <p class="product-desc">Un clásico espectacular con el sabor de casa y un toque exquisito de canela.</p>
-                    <a href="https://wa.me/50585140940?text=Hola!%20Quiero%20ordenar%20una%20Torta%20de%20Atolillo" class="btn-order" target="_blank" rel="noopener noreferrer">
-                        <i class="fa-brands fa-whatsapp"></i> Pedir ahora
-                    </a>
-                </div>
-            </article>
+                <!-- 2. Fresas con Chocolate -->
+                <article class="product-card" data-category="vaso" data-id="fresas-chocolate" data-name="Fresas con Chocolate" data-price="100" data-image="23.jpeg">
+                    <span class="badge">Nuevo</span>
+                    <div class="product-image-container">
+                        <div class="product-gallery">
+                            <div class="gallery-track">
+                                <img src="23.jpeg" alt="Fresas con Chocolate - vista 1">
+                                <img src="23.1.jpeg" alt="Fresas con Chocolate - vista 2" loading="lazy">
+                                <img src="23.2.jpeg" alt="Fresas con Chocolate - vista 3" loading="lazy">
+                            </div>
+                            <button type="button" class="gallery-btn prev" aria-label="Imagen anterior"><i class="fa-solid fa-chevron-left"></i></button>
+                            <button type="button" class="gallery-btn next" aria-label="Siguiente imagen"><i class="fa-solid fa-chevron-right"></i></button>
+                            <div class="gallery-dots">
+                                <button type="button" class="dot active" aria-label="Ir a imagen 1"></button>
+                                <button type="button" class="dot" aria-label="Ir a imagen 2"></button>
+                                <button type="button" class="dot" aria-label="Ir a imagen 3"></button>
+                            </div>
+                        </div>
+                        <div class="price-tag">C$100</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Fresas con Chocolate</h3>
+                        <p class="product-desc">Fresas frescas intercaladas con suave crema y bañadas en delicioso chocolate con chispas. ¡Una combinación irresistible!</p>
+                        <div class="card-actions">
+                            <div class="qty-stepper" role="group" aria-label="Cantidad de Fresas con Chocolate">
+                                <button type="button" class="qty-btn" data-step="-1" aria-label="Quitar una unidad">−</button>
+                                <span class="qty-value">1</span>
+                                <button type="button" class="qty-btn" data-step="1" aria-label="Añadir una unidad">+</button>
+                            </div>
+                            <button type="button" class="btn-add"><i class="fa-solid fa-bag-shopping"></i> Agregar</button>
+                        </div>
+                    </div>
+                </article>
 
-            <!-- Producto 4 -->
-            <article class="product-card" data-category="tortas">
-                <div class="product-image-container">
-                    <img src="4.jpeg" alt="Torta de Chocolate con Crema" loading="lazy">
-                    <div class="price-tag">C$150</div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">Torta de Chocolate con Crema</h3>
-                    <p class="product-desc">Deliciosa base húmeda de chocolate cubierta con abundante y suave crema.</p>
-                    <a href="https://wa.me/50585140940?text=Hola!%20Quiero%20ordenar%20una%20Torta%20de%20Chocolate%20con%20Crema" class="btn-order" target="_blank" rel="noopener noreferrer">
-                        <i class="fa-brands fa-whatsapp"></i> Pedir ahora
-                    </a>
-                </div>
-            </article>
+                <!-- 3. Mosaico Premium -->
+                <article class="product-card" data-category="tortas" data-id="mosaico-premium" data-name="Mosaico Premium" data-price="1500" data-image="17.1.jpeg">
+                    <span class="badge">Nuevo</span>
+                    <div class="product-image-container">
+                        <div class="product-gallery">
+                            <div class="gallery-track">
+                                <img src="17.1.jpeg" alt="Mosaico Premium - vista completa">
+                                <img src="17.jpeg" alt="Mosaico Premium - detalle" loading="lazy">
+                            </div>
+                            <button type="button" class="gallery-btn prev" aria-label="Imagen anterior"><i class="fa-solid fa-chevron-left"></i></button>
+                            <button type="button" class="gallery-btn next" aria-label="Siguiente imagen"><i class="fa-solid fa-chevron-right"></i></button>
+                            <div class="gallery-dots">
+                                <button type="button" class="dot active" aria-label="Ir a imagen 1"></button>
+                                <button type="button" class="dot" aria-label="Ir a imagen 2"></button>
+                            </div>
+                        </div>
+                        <div class="price-tag">C$1,500</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Mosaico Premium</h3>
+                        <p class="product-desc">Nuestra especialidad en versión más grande. Delicioso mosaico cremoso con trozos de fruta. ¡Un placer para compartir!</p>
+                        <div class="card-actions">
+                            <div class="qty-stepper" role="group" aria-label="Cantidad de Mosaico Premium">
+                                <button type="button" class="qty-btn" data-step="-1" aria-label="Quitar una unidad">−</button>
+                                <span class="qty-value">1</span>
+                                <button type="button" class="qty-btn" data-step="1" aria-label="Añadir una unidad">+</button>
+                            </div>
+                            <button type="button" class="btn-add"><i class="fa-solid fa-bag-shopping"></i> Agregar</button>
+                        </div>
+                    </div>
+                </article>
 
-            <!-- Producto 5 -->
-            <article class="product-card" data-category="tortas">
-                <div class="product-image-container">
-                    <img src="5.jpeg" alt="Torta de Piña" loading="lazy">
-                    <div class="price-tag">C$150</div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">Torta de Piña</h3>
-                    <p class="product-desc">Esponjosa y jugosa torta con el inconfundible sabor dulce y tropical de la piña.</p>
-                    <a href="https://wa.me/50585140940?text=Hola!%20Quiero%20ordenar%20una%20Torta%20de%20Piña" class="btn-order" target="_blank" rel="noopener noreferrer">
-                        <i class="fa-brands fa-whatsapp"></i> Pedir ahora
-                    </a>
-                </div>
-            </article>
+                <!-- 4. Gelatina de Durazno (vaso) -->
+                <article class="product-card" data-category="vaso" data-id="gelatina-durazno-vaso" data-name="Gelatina de Durazno" data-price="120" data-image="20.1.jpeg">
+                    <span class="badge">Nuevo</span>
+                    <div class="product-image-container">
+                        <div class="product-gallery">
+                            <div class="gallery-track">
+                                <img src="20.1.jpeg" alt="Gelatina de Durazno">
+                                <img src="20.jpeg" alt="Gelatina de Durazno - detalle" loading="lazy">
+                            </div>
+                            <button type="button" class="gallery-btn prev" aria-label="Imagen anterior"><i class="fa-solid fa-chevron-left"></i></button>
+                            <button type="button" class="gallery-btn next" aria-label="Siguiente imagen"><i class="fa-solid fa-chevron-right"></i></button>
+                            <div class="gallery-dots">
+                                <button type="button" class="dot active" aria-label="Ir a imagen 1"></button>
+                                <button type="button" class="dot" aria-label="Ir a imagen 2"></button>
+                            </div>
+                        </div>
+                        <div class="price-tag">C$120</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Gelatina de Durazno</h3>
+                        <p class="product-desc">Deliciosa gelatina de durazno. Compra una y te dan ganas de más. ¡Qué esperas!</p>
+                        <div class="card-actions">
+                            <div class="qty-stepper" role="group" aria-label="Cantidad de Gelatina de Durazno">
+                                <button type="button" class="qty-btn" data-step="-1" aria-label="Quitar una unidad">−</button>
+                                <span class="qty-value">1</span>
+                                <button type="button" class="qty-btn" data-step="1" aria-label="Añadir una unidad">+</button>
+                            </div>
+                            <button type="button" class="btn-add"><i class="fa-solid fa-bag-shopping"></i> Agregar</button>
+                        </div>
+                    </div>
+                </article>
 
-            <!-- Producto 6 -->
-            <article class="product-card" data-category="vaso">
-                <div class="product-image-container">
-                    <img src="6.jpeg" alt="Tres Leches de Chocolate" loading="lazy">
-                    <div class="price-tag">C$100</div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">Tres Leches de Chocolate</h3>
-                    <p class="product-desc">La fusión perfecta del tradicional tres leches con el irresistible y decadente sabor a chocolate.</p>
-                    <a href="https://wa.me/50585140940?text=Hola!%20Quiero%20ordenar%20un%20Tres%20Leches%20de%20Chocolate" class="btn-order" target="_blank" rel="noopener noreferrer">
-                        <i class="fa-brands fa-whatsapp"></i> Pedir ahora
-                    </a>
-                </div>
-            </article>
+                <!-- 5. Pastel Celeste Personalizado -->
+                <article class="product-card" data-category="tortas" data-id="pastel-celeste" data-name="Pastel Celeste Personalizado" data-price="900" data-image="16.1.jpeg">
+                    <div class="product-image-container">
+                        <div class="product-gallery">
+                            <div class="gallery-track">
+                                <img src="16.1.jpeg" alt="Pastel Celeste Deportivo">
+                                <img src="16.jpeg" alt="Pastel Celeste - detalle" loading="lazy">
+                            </div>
+                            <button type="button" class="gallery-btn prev" aria-label="Imagen anterior"><i class="fa-solid fa-chevron-left"></i></button>
+                            <button type="button" class="gallery-btn next" aria-label="Siguiente imagen"><i class="fa-solid fa-chevron-right"></i></button>
+                            <div class="gallery-dots">
+                                <button type="button" class="dot active" aria-label="Ir a imagen 1"></button>
+                                <button type="button" class="dot" aria-label="Ir a imagen 2"></button>
+                            </div>
+                        </div>
+                        <div class="price-tag">C$900</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Pastel Celeste Personalizado</h3>
+                        <p class="product-desc">Espectacular torta decorada con temática deportiva o de tu preferencia. Personalizada para cumpleaños inolvidables.</p>
+                        <div class="card-actions">
+                            <div class="qty-stepper" role="group" aria-label="Cantidad de Pastel Celeste">
+                                <button type="button" class="qty-btn" data-step="-1" aria-label="Quitar una unidad">−</button>
+                                <span class="qty-value">1</span>
+                                <button type="button" class="qty-btn" data-step="1" aria-label="Añadir una unidad">+</button>
+                            </div>
+                            <button type="button" class="btn-add"><i class="fa-solid fa-bag-shopping"></i> Agregar</button>
+                        </div>
+                    </div>
+                </article>
 
-            <!-- Producto 7 -->
-            <article class="product-card" data-category="tortas">
-                <div class="product-image-container">
-                    <img src="7.jpeg" alt="Porción Torta de Chocolate" loading="lazy">
-                    <div class="price-tag">C$70</div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">Torta de Chocolate (Porción)</h3>
-                    <p class="product-desc">Extremadamente dulce y esponjosa, finamente decorada con exquisito dulce de leche.</p>
-                    <a href="https://wa.me/50585140940?text=Hola!%20Quiero%20ordenar%20una%20Porción%20de%20Torta%20de%20Chocolate" class="btn-order" target="_blank" rel="noopener noreferrer">
-                        <i class="fa-brands fa-whatsapp"></i> Pedir ahora
-                    </a>
-                </div>
-            </article>
+                <!-- 6. Torta de Chocolate Especial -->
+                <article class="product-card" data-category="tortas" data-id="torta-chocolate-especial" data-name="Torta de Chocolate Especial" data-price="800" data-image="18.jpeg">
+                    <div class="product-image-container">
+                        <img src="18.jpeg" alt="Torta de Chocolate Especial" loading="lazy">
+                        <div class="price-tag">C$800</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Torta de Chocolate Especial</h3>
+                        <p class="product-desc">Exquisita torta de chocolate artesanal, extremadamente húmeda y esponjosa, cubierta con un irresistible dulce de leche.</p>
+                        <div class="card-actions">
+                            <div class="qty-stepper" role="group" aria-label="Cantidad de Torta de Chocolate Especial">
+                                <button type="button" class="qty-btn" data-step="-1" aria-label="Quitar una unidad">−</button>
+                                <span class="qty-value">1</span>
+                                <button type="button" class="qty-btn" data-step="1" aria-label="Añadir una unidad">+</button>
+                            </div>
+                            <button type="button" class="btn-add"><i class="fa-solid fa-bag-shopping"></i> Agregar</button>
+                        </div>
+                    </div>
+                </article>
 
-            <!-- Producto 8 -->
-            <article class="product-card" data-category="cupcakes">
-                <div class="product-image-container">
-                    <img src="8.jpeg" alt="Cupcakes Especiales" loading="lazy">
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">Cupcakes Especiales</h3>
-                    <p class="product-desc">Detalles llenos de amor. Disponibles en deliciosos sabores clásicos: Vainilla y Chocolate.</p>
-                    <a href="https://wa.me/50585140940?text=Hola!%20Quiero%20consultar%20precios%20de%20los%20Cupcakes%20Especiales" class="btn-order btn-secondary" target="_blank" rel="noopener noreferrer">
-                        <i class="fa-brands fa-whatsapp"></i> Consultar precio
-                    </a>
-                </div>
-            </article>
+                <!-- 7. Pastel Artesanales -->
+                <article class="product-card" data-category="cupcakes" data-id="pastel-artesanales" data-name="Pastel Artesanales" data-price="500" data-image="19.jpeg">
+                    <div class="product-image-container">
+                        <img src="19.jpeg" alt="Pastel Artesanales" loading="lazy">
+                        <div class="price-tag">C$500</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Pastel Artesanales</h3>
+                        <p class="product-desc">Deliciosos pasteles decorados especialmente para celebrar. Disponibles en sabor chocolate y vainilla.</p>
+                        <div class="card-actions">
+                            <div class="qty-stepper" role="group" aria-label="Cantidad de Pastel Artesanales">
+                                <button type="button" class="qty-btn" data-step="-1" aria-label="Quitar una unidad">−</button>
+                                <span class="qty-value">1</span>
+                                <button type="button" class="qty-btn" data-step="1" aria-label="Añadir una unidad">+</button>
+                            </div>
+                            <button type="button" class="btn-add"><i class="fa-solid fa-bag-shopping"></i> Agregar</button>
+                        </div>
+                    </div>
+                </article>
 
-            <!-- Producto 9 -->
-            <article class="product-card" data-category="vaso">
-                <div class="product-image-container">
-                    <img src="9.png" alt="Torta de Mermelada de Piña" loading="lazy">
-                    <div class="price-tag">C$60</div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">Torta de Mermelada de Piña</h3>
-                    <p class="product-desc">Capas de bizcocho suave intercaladas con una deliciosa y fresca mermelada de piña.</p>
-                    <a href="https://wa.me/50585140940?text=Hola!%20Quiero%20ordenar%20una%20Torta%20de%20Mermelada%20de%20Piña" class="btn-order" target="_blank" rel="noopener noreferrer">
-                        <i class="fa-brands fa-whatsapp"></i> Pedir ahora
-                    </a>
-                </div>
-            </article>
+                <!-- 8. Gelatina Encapsulada -->
+                <article class="product-card" data-category="tradicional" data-id="gelatina-encapsulada" data-name="Gelatina Encapsulada" data-price="800" data-image="21.jpeg">
+                    <div class="product-image-container">
+                        <img src="21.jpeg" alt="Gelatina encapsulada" loading="lazy">
+                        <div class="price-tag">C$800</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Gelatina Encapsulada</h3>
+                        <p class="product-desc">Deliciosa gelatina encapsulada de fruta, con efecto visual de uvas, fresas y melocotón.</p>
+                        <div class="card-actions">
+                            <div class="qty-stepper" role="group" aria-label="Cantidad de Gelatina Encapsulada">
+                                <button type="button" class="qty-btn" data-step="-1" aria-label="Quitar una unidad">−</button>
+                                <span class="qty-value">1</span>
+                                <button type="button" class="qty-btn" data-step="1" aria-label="Añadir una unidad">+</button>
+                            </div>
+                            <button type="button" class="btn-add"><i class="fa-solid fa-bag-shopping"></i> Agregar</button>
+                        </div>
+                    </div>
+                </article>
 
-            <!-- Producto 11 -->
-            <article class="product-card" data-category="vaso">
-                <div class="product-image-container">
-                    <img src="11.jpeg" alt="Mousse de Maracuyá" loading="lazy">
-                    <div class="price-tag">C$90</div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">Mousse de Maracuyá</h3>
-                    <p class="product-desc">Deliciosa textura increíblemente cremosa con el equilibrio perfecto entre dulce y el toque cítrico del maracuyá.</p>
-                    <a href="https://wa.me/50585140940?text=Hola!%20Quiero%20ordenar%20un%20Mousse%20de%20Maracuyá" class="btn-order" target="_blank" rel="noopener noreferrer">
-                        <i class="fa-brands fa-whatsapp"></i> Pedir ahora
-                    </a>
-                </div>
-            </article>
+                <!-- 9. Mosaico en vaso -->
+                <article class="product-card" data-category="vaso" data-id="mosaico-vaso" data-name="Mosaico en vaso" data-price="120" data-image="1.jpeg">
+                    <div class="product-image-container">
+                        <img src="1.jpeg" alt="Mosaico en vaso">
+                        <div class="price-tag">C$120</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Mosaico en vaso</h3>
+                        <p class="product-desc">Textura increíblemente suave y cremosa. Capas de felicidad listas para alegrar tu día en una presentación práctica.</p>
+                        <div class="card-actions">
+                            <div class="qty-stepper" role="group" aria-label="Cantidad de Mosaico en vaso">
+                                <button type="button" class="qty-btn" data-step="-1" aria-label="Quitar una unidad">−</button>
+                                <span class="qty-value">1</span>
+                                <button type="button" class="qty-btn" data-step="1" aria-label="Añadir una unidad">+</button>
+                            </div>
+                            <button type="button" class="btn-add"><i class="fa-solid fa-bag-shopping"></i> Agregar</button>
+                        </div>
+                    </div>
+                </article>
 
-            <!-- Producto 12 -->
-            <article class="product-card" data-category="vaso">
-                <span class="badge">Especialidad</span>
-                <div class="product-image-container">
-                    <img src="12.jpeg" alt="Copa Wassby Especial" loading="lazy">
-                    <div class="price-tag">C$100</div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">Copa Wassby Especial</h3>
-                    <p class="product-desc">Nuestra especialidad en capas de bizcocho suave y crema deliciosa, el postre perfecto de la casa para llevar.</p>
-                    <a href="https://wa.me/50585140940?text=Hola!%20Quiero%20ordenar%20una%20Copa%20Wassby%20Especial" class="btn-order" target="_blank" rel="noopener noreferrer">
-                        <i class="fa-brands fa-whatsapp"></i> Pedir ahora
-                    </a>
-                </div>
-            </article>
+                <!-- 10. Gelatina Tres Leches -->
+                <article class="product-card" data-category="tradicional" data-id="gelatina-tres-leches" data-name="Gelatina Tres Leches" data-price="600" data-image="2.jpeg">
+                    <div class="product-image-container">
+                        <img src="2.jpeg" alt="Gelatina Tres Leches" loading="lazy">
+                        <div class="price-tag">C$600</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Gelatina Tres Leches</h3>
+                        <p class="product-desc">La suavidad perfecta hecha postre. El toque elegante y tradicional para compartir en familia.</p>
+                        <div class="card-actions">
+                            <div class="qty-stepper" role="group" aria-label="Cantidad de Gelatina Tres Leches">
+                                <button type="button" class="qty-btn" data-step="-1" aria-label="Quitar una unidad">−</button>
+                                <span class="qty-value">1</span>
+                                <button type="button" class="qty-btn" data-step="1" aria-label="Añadir una unidad">+</button>
+                            </div>
+                            <button type="button" class="btn-add"><i class="fa-solid fa-bag-shopping"></i> Agregar</button>
+                        </div>
+                    </div>
+                </article>
 
-            <!-- Producto 13 -->
-            <article class="product-card" data-category="tortas">
-                <div class="product-image-container">
-                    <img src="13.jpeg" alt="Torta Especial para Celebrar" loading="lazy">
-                    <div class="price-tag">C$600</div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">Torta Especial para Celebrar</h3>
-                    <p class="product-desc">Ideal para tus festejos. Cubierta de suave crema y decorada delicadamente con un exquisito enrejado de dulce de leche.</p>
-                    <a href="https://wa.me/50585140940?text=Hola!%20Quiero%20ordenar%20una%20Torta%20Especial%20para%20Celebrar" class="btn-order" target="_blank" rel="noopener noreferrer">
-                        <i class="fa-brands fa-whatsapp"></i> Pedir ahora
-                    </a>
-                </div>
-            </article>
+                <!-- 11. Torta de Atolillo -->
+                <article class="product-card" data-category="tortas" data-id="torta-atolillo" data-name="Torta de Atolillo" data-price="120" data-image="3.jpeg">
+                    <div class="product-image-container">
+                        <img src="3.jpeg" alt="Torta de Atolillo" loading="lazy">
+                        <div class="price-tag">C$120</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Torta de Atolillo</h3>
+                        <p class="product-desc">Un clásico espectacular con el sabor de casa y un toque exquisito de canela.</p>
+                        <div class="card-actions">
+                            <div class="qty-stepper" role="group" aria-label="Cantidad de Torta de Atolillo">
+                                <button type="button" class="qty-btn" data-step="-1" aria-label="Quitar una unidad">−</button>
+                                <span class="qty-value">1</span>
+                                <button type="button" class="qty-btn" data-step="1" aria-label="Añadir una unidad">+</button>
+                            </div>
+                            <button type="button" class="btn-add"><i class="fa-solid fa-bag-shopping"></i> Agregar</button>
+                        </div>
+                    </div>
+                </article>
 
-            <!-- Producto 14 -->
-            <article class="product-card" data-category="vaso">
-                <div class="product-image-container">
-                    <img src="14.jpeg" alt="Pío Quinto" loading="lazy">
-                    <div class="price-tag">C$90</div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">Pío Quinto</h3>
-                    <p class="product-desc">Un tesoro de la tradición nicaragüense. Bizcocho exquisitamente húmedo coronado con una suave capa muy cremosa.</p>
-                    <a href="https://wa.me/50585140940?text=Hola!%20Quiero%20ordenar%20un%20Pío%20Quinto" class="btn-order" target="_blank" rel="noopener noreferrer">
-                        <i class="fa-brands fa-whatsapp"></i> Pedir ahora
-                    </a>
-                </div>
-            </article>
+                <!-- 12. Torta de Chocolate con Crema -->
+                <article class="product-card" data-category="tortas" data-id="torta-chocolate-crema" data-name="Torta de Chocolate con Crema" data-price="150" data-image="4.jpeg">
+                    <div class="product-image-container">
+                        <img src="4.jpeg" alt="Torta de Chocolate con Crema" loading="lazy">
+                        <div class="price-tag">C$150</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Torta de Chocolate con Crema</h3>
+                        <p class="product-desc">Deliciosa base húmeda de chocolate cubierta con abundante y suave crema.</p>
+                        <div class="card-actions">
+                            <div class="qty-stepper" role="group" aria-label="Cantidad de Torta de Chocolate con Crema">
+                                <button type="button" class="qty-btn" data-step="-1" aria-label="Quitar una unidad">−</button>
+                                <span class="qty-value">1</span>
+                                <button type="button" class="qty-btn" data-step="1" aria-label="Añadir una unidad">+</button>
+                            </div>
+                            <button type="button" class="btn-add"><i class="fa-solid fa-bag-shopping"></i> Agregar</button>
+                        </div>
+                    </div>
+                </article>
 
-            <!-- Producto 15 -->
-            <article class="product-card" data-category="tradicional">
-                <div class="product-image-container">
-                    <img src="15.jpeg" alt="Gelatina de Durazno" loading="lazy">
-                    <div class="price-tag">C$100</div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">Gelatina de Durazno</h3>
-                    <p class="product-desc">Una porción dulce y sumamente suave, rebosante del delicioso y refrescante sabor a durazno.</p>
-                    <a href="https://wa.me/50585140940?text=Hola!%20Quiero%20ordenar%20una%20Gelatina%20de%20Durazno" class="btn-order" target="_blank" rel="noopener noreferrer">
-                        <i class="fa-brands fa-whatsapp"></i> Pedir ahora
-                    </a>
-                </div>
-            </article>
+                <!-- 13. Torta de Piña -->
+                <article class="product-card" data-category="tortas" data-id="torta-pina" data-name="Torta de Piña" data-price="150" data-image="5.jpeg">
+                    <div class="product-image-container">
+                        <img src="5.jpeg" alt="Torta de Piña" loading="lazy">
+                        <div class="price-tag">C$150</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Torta de Piña</h3>
+                        <p class="product-desc">Esponjosa y jugosa torta con el inconfundible sabor dulce y tropical de la piña.</p>
+                        <div class="card-actions">
+                            <div class="qty-stepper" role="group" aria-label="Cantidad de Torta de Piña">
+                                <button type="button" class="qty-btn" data-step="-1" aria-label="Quitar una unidad">−</button>
+                                <span class="qty-value">1</span>
+                                <button type="button" class="qty-btn" data-step="1" aria-label="Añadir una unidad">+</button>
+                            </div>
+                            <button type="button" class="btn-add"><i class="fa-solid fa-bag-shopping"></i> Agregar</button>
+                        </div>
+                    </div>
+                </article>
 
+                <!-- 14. Tres Leches de Chocolate -->
+                <article class="product-card" data-category="vaso" data-id="tres-leches-chocolate" data-name="Tres Leches de Chocolate" data-price="150" data-image="6.jpeg">
+                    <div class="product-image-container">
+                        <img src="6.jpeg" alt="Tres Leches de Chocolate" loading="lazy">
+                        <div class="price-tag">C$150</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Tres Leches de Chocolate</h3>
+                        <p class="product-desc">La fusión perfecta del tradicional tres leches con el irresistible y decadente sabor a chocolate.</p>
+                        <div class="card-actions">
+                            <div class="qty-stepper" role="group" aria-label="Cantidad de Tres Leches de Chocolate">
+                                <button type="button" class="qty-btn" data-step="-1" aria-label="Quitar una unidad">−</button>
+                                <span class="qty-value">1</span>
+                                <button type="button" class="qty-btn" data-step="1" aria-label="Añadir una unidad">+</button>
+                            </div>
+                            <button type="button" class="btn-add"><i class="fa-solid fa-bag-shopping"></i> Agregar</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 15. Torta de Chocolate con Baños de Caramelo -->
+                <article class="product-card" data-category="tortas" data-id="torta-caramelo" data-name="Torta de Chocolate con Baños de Caramelo" data-price="70" data-image="7.jpeg">
+                    <div class="product-image-container">
+                        <img src="7.jpeg" alt="Torta de Chocolate con Baños de Caramelo" loading="lazy">
+                        <div class="price-tag">C$70</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Torta de Chocolate con Baños de Caramelo</h3>
+                        <p class="product-desc">Extremadamente dulce y esponjosa, finamente bañada con un exquisito caramelo.</p>
+                        <div class="card-actions">
+                            <div class="qty-stepper" role="group" aria-label="Cantidad de Torta de Chocolate con Caramelo">
+                                <button type="button" class="qty-btn" data-step="-1" aria-label="Quitar una unidad">−</button>
+                                <span class="qty-value">1</span>
+                                <button type="button" class="qty-btn" data-step="1" aria-label="Añadir una unidad">+</button>
+                            </div>
+                            <button type="button" class="btn-add"><i class="fa-solid fa-bag-shopping"></i> Agregar</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 16. Cupcakes Especiales (precio a consultar) -->
+                <article class="product-card" data-category="cupcakes" data-id="cupcakes-especiales" data-name="Cupcakes Especiales" data-image="8.jpeg">
+                    <div class="product-image-container">
+                        <img src="8.jpeg" alt="Cupcakes Especiales" loading="lazy">
+                        <div class="price-tag">Consultar</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Cupcakes Especiales</h3>
+                        <p class="product-desc">Detalles llenos de amor. Disponibles en deliciosos sabores clásicos: Vainilla y Chocolate.</p>
+                        <div class="card-actions">
+                            <div class="qty-stepper" role="group" aria-label="Cantidad de Cupcakes Especiales">
+                                <button type="button" class="qty-btn" data-step="-1" aria-label="Quitar una unidad">−</button>
+                                <span class="qty-value">1</span>
+                                <button type="button" class="qty-btn" data-step="1" aria-label="Añadir una unidad">+</button>
+                            </div>
+                            <button type="button" class="btn-add"><i class="fa-solid fa-bag-shopping"></i> Agregar</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 17. Torta de Mermelada de Piña -->
+                <article class="product-card" data-category="tortas" data-id="torta-mermelada-pina" data-name="Torta de Mermelada de Piña" data-price="80" data-image="9.png">
+                    <div class="product-image-container">
+                        <img src="9.png" alt="Torta de Mermelada de Piña" loading="lazy">
+                        <div class="price-tag">C$80</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Torta de Mermelada de Piña</h3>
+                        <p class="product-desc">Capas de bizcocho suave intercaladas con una deliciosa y fresca mermelada de piña.</p>
+                        <div class="card-actions">
+                            <div class="qty-stepper" role="group" aria-label="Cantidad de Torta de Mermelada de Piña">
+                                <button type="button" class="qty-btn" data-step="-1" aria-label="Quitar una unidad">−</button>
+                                <span class="qty-value">1</span>
+                                <button type="button" class="qty-btn" data-step="1" aria-label="Añadir una unidad">+</button>
+                            </div>
+                            <button type="button" class="btn-add"><i class="fa-solid fa-bag-shopping"></i> Agregar</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 18. Mousse de Maracuyá -->
+                <article class="product-card" data-category="vaso" data-id="mousse-maracuya" data-name="Mousse de Maracuyá" data-price="90" data-image="11.jpeg">
+                    <div class="product-image-container">
+                        <img src="11.jpeg" alt="Mousse de Maracuyá" loading="lazy">
+                        <div class="price-tag">C$90</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Mousse de Maracuyá</h3>
+                        <p class="product-desc">Deliciosa textura increíblemente cremosa con el equilibrio perfecto entre dulce y el toque cítrico del maracuyá.</p>
+                        <div class="card-actions">
+                            <div class="qty-stepper" role="group" aria-label="Cantidad de Mousse de Maracuyá">
+                                <button type="button" class="qty-btn" data-step="-1" aria-label="Quitar una unidad">−</button>
+                                <span class="qty-value">1</span>
+                                <button type="button" class="qty-btn" data-step="1" aria-label="Añadir una unidad">+</button>
+                            </div>
+                            <button type="button" class="btn-add"><i class="fa-solid fa-bag-shopping"></i> Agregar</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 19. Copa Wassby Especial -->
+                <article class="product-card" data-category="vaso" data-id="copa-wassby" data-name="Copa Wassby Especial" data-price="150" data-image="12.jpeg">
+                    <span class="badge">Nuevos colores</span>
+                    <div class="product-image-container">
+                        <img src="12.jpeg" alt="Copa Wassby Especial" loading="lazy">
+                        <div class="price-tag">C$150</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Copa Wassby Especial</h3>
+                        <p class="product-desc">Nuestra especialidad en capas de bizcocho suave y crema deliciosa, el postre perfecto de la casa para llevar.</p>
+                        <div class="card-actions">
+                            <div class="qty-stepper" role="group" aria-label="Cantidad de Copa Wassby Especial">
+                                <button type="button" class="qty-btn" data-step="-1" aria-label="Quitar una unidad">−</button>
+                                <span class="qty-value">1</span>
+                                <button type="button" class="qty-btn" data-step="1" aria-label="Añadir una unidad">+</button>
+                            </div>
+                            <button type="button" class="btn-add"><i class="fa-solid fa-bag-shopping"></i> Agregar</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 20. Bandeja de Tres Leche Premium -->
+                <article class="product-card" data-category="vaso" data-id="bandeja-tres-leches" data-name="Bandeja de Tres Leche Premium" data-price="600" data-image="13.1.jpeg">
+                    <span class="badge">Nuevo</span>
+                    <div class="product-image-container">
+                        <div class="product-gallery">
+                            <div class="gallery-track">
+                                <img src="13.1.jpeg" alt="Bandeja de Tres Leche Premium">
+                                <img src="13.jpeg" alt="Bandeja de Tres Leche - detalle" loading="lazy">
+                            </div>
+                            <button type="button" class="gallery-btn prev" aria-label="Imagen anterior"><i class="fa-solid fa-chevron-left"></i></button>
+                            <button type="button" class="gallery-btn next" aria-label="Siguiente imagen"><i class="fa-solid fa-chevron-right"></i></button>
+                            <div class="gallery-dots">
+                                <button type="button" class="dot active" aria-label="Ir a imagen 1"></button>
+                                <button type="button" class="dot" aria-label="Ir a imagen 2"></button>
+                            </div>
+                        </div>
+                        <div class="price-tag">C$600</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Bandeja de Tres Leche Premium</h3>
+                        <p class="product-desc">Una porción más grande de tres leches. ¡Delicioso, con solo verlo te dan ganas de más!</p>
+                        <div class="card-actions">
+                            <div class="qty-stepper" role="group" aria-label="Cantidad de Bandeja de Tres Leche Premium">
+                                <button type="button" class="qty-btn" data-step="-1" aria-label="Quitar una unidad">−</button>
+                                <span class="qty-value">1</span>
+                                <button type="button" class="qty-btn" data-step="1" aria-label="Añadir una unidad">+</button>
+                            </div>
+                            <button type="button" class="btn-add"><i class="fa-solid fa-bag-shopping"></i> Agregar</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 21. Pío Quinto -->
+                <article class="product-card" data-category="vaso" data-id="pio-quinto" data-name="Pío Quinto" data-price="100" data-image="14.jpeg">
+                    <div class="product-image-container">
+                        <img src="14.jpeg" alt="Pío Quinto" loading="lazy">
+                        <div class="price-tag">C$100</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Pío Quinto</h3>
+                        <p class="product-desc">Un tesoro de la tradición nicaragüense. Bizcocho exquisitamente húmedo coronado con una suave capa muy cremosa.</p>
+                        <div class="card-actions">
+                            <div class="qty-stepper" role="group" aria-label="Cantidad de Pío Quinto">
+                                <button type="button" class="qty-btn" data-step="-1" aria-label="Quitar una unidad">−</button>
+                                <span class="qty-value">1</span>
+                                <button type="button" class="qty-btn" data-step="1" aria-label="Añadir una unidad">+</button>
+                            </div>
+                            <button type="button" class="btn-add"><i class="fa-solid fa-bag-shopping"></i> Agregar</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 22. Gelatina de Durazno (tradicional) -->
+                <article class="product-card" data-category="tradicional" data-id="gelatina-durazno" data-name="Gelatina de Durazno" data-price="100" data-image="15.jpeg">
+                    <div class="product-image-container">
+                        <img src="15.jpeg" alt="Gelatina de Durazno" loading="lazy">
+                        <div class="price-tag">C$100</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Gelatina de Durazno</h3>
+                        <p class="product-desc">Una porción dulce y sumamente suave, rebosante del delicioso y refrescante sabor a durazno.</p>
+                        <div class="card-actions">
+                            <div class="qty-stepper" role="group" aria-label="Cantidad de Gelatina de Durazno">
+                                <button type="button" class="qty-btn" data-step="-1" aria-label="Quitar una unidad">−</button>
+                                <span class="qty-value">1</span>
+                                <button type="button" class="qty-btn" data-step="1" aria-label="Añadir una unidad">+</button>
+                            </div>
+                            <button type="button" class="btn-add"><i class="fa-solid fa-bag-shopping"></i> Agregar</button>
+                        </div>
+                    </div>
+                </article>
+
+            </section>
+
+            <!-- FRANJA DE BENEFICIOS -->
+            <section class="perks" aria-label="Nuestros servicios">
+                <div class="perk">
+                    <span class="perk-icon"><i class="fa-regular fa-calendar-days"></i></span>
+                    <div><strong>Pedidos anticipados</strong><small>Con 24 horas de anticipación</small></div>
+                </div>
+                <div class="perk">
+                    <span class="perk-icon"><i class="fa-solid fa-truck-fast"></i></span>
+                    <div><strong>Entrega puntual</strong><small>En Managua, a la hora acordada</small></div>
+                </div>
+                <div class="perk">
+                    <span class="perk-icon"><i class="fa-solid fa-cake-candles"></i></span>
+                    <div><strong>Diseños personalizados</strong><small>Tu idea, nuestra creación</small></div>
+                </div>
+                <div class="perk">
+                    <span class="perk-icon"><i class="fa-solid fa-gift"></i></span>
+                    <div><strong>Para toda ocasión</strong><small>Cumpleaños, aniversarios y más</small></div>
+                </div>
+            </section>
         </main>
 
-        <!-- PIE DE PÁGINA -->
-        <footer class="footer">
-            <h3 class="footer-title">Wassby Sweet</h3>
-            <p class="footer-desc">Repostería artesanal hecha en casa con ingredientes de la mejor calidad. Tortas, postres en vaso, cupcakes y mucho más para endulzar tus momentos especiales.</p>
+        <!-- ==================== FOOTER ==================== -->
+        <footer class="footer" id="contacto">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-brand">Wassby <em>Sweet</em></div>
+                    <p class="footer-desc">
+                        Repostería artesanal hecha en casa con ingredientes de la mejor calidad.
+                        Tortas, postres en vaso, cupcakes y mucho más para endulzar tus momentos especiales.
+                    </p>
+                    <div class="footer-social-links">
+                        <a href="https://www.instagram.com/wassby_sweet?cplk=aG9zYTNkd3Vmc3Q=" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <a href="https://www.tiktok.com/@wassby_sweet?_r=1&_t=ZS-9BRhAGPSKCW" target="_blank" rel="noopener noreferrer" aria-label="TikTok" title="TikTok">
+                            <i class="fa-brands fa-tiktok"></i>
+                        </a>
+                        <a href="https://wa.me/50585140940" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Directo" title="WhatsApp Directo">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </a>
+                    </div>
+                </div>
 
-            <h3 class="footer-title">Contacto</h3>
-            <ul class="footer-contact">
-                <li><i class="fa-solid fa-phone"></i> 8514-0940</li>
-                <li><i class="fa-solid fa-location-dot"></i> Managua, Nicaragua</li>
-                <li><i class="fa-solid fa-clock"></i> Pedidos con 24h de anticipación</li>
-            </ul>
+                <div>
+                    <h3 class="footer-title">Contacto</h3>
+                    <ul class="footer-contact">
+                        <li><i class="fa-solid fa-phone"></i> 8514-0940</li>
+                        <li><i class="fa-solid fa-location-dot"></i> Managua, Nicaragua</li>
+                        <li><i class="fa-solid fa-clock"></i> Pedidos con 24h de anticipación</li>
+                    </ul>
+                </div>
 
-            <h3 class="footer-title">Síguenos</h3>
-            <div class="footer-social-links">
-                <a href="https://www.instagram.com/wassby_sweat" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram">
-                    <i class="fa-brands fa-instagram"></i>
-                </a>
-                <a href="https://www.tiktok.com/@wassby_sweat" target="_blank" rel="noopener noreferrer" aria-label="TikTok" title="TikTok">
-                    <i class="fa-brands fa-tiktok"></i>
-                </a>
-                <a href="https://wa.me/50585140940" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Directo" title="WhatsApp Directo">
-                    <i class="fa-brands fa-whatsapp"></i>
-                </a>
+                <div>
+                    <h3 class="footer-title">Tu pedido</h3>
+                    <ul class="footer-contact">
+                        <li><i class="fa-solid fa-bag-shopping"></i> Arma tu carrito en línea</li>
+                        <li><i class="fa-brands fa-whatsapp"></i> Envíalo por WhatsApp</li>
+                        <li><i class="fa-solid fa-heart"></i> Hecho fresco para ti</li>
+                    </ul>
+                </div>
             </div>
 
-            <p class="footer-bottom-text">&copy; 2026 Wassby Sweet. Todos los derechos reservados.</p>
+            <p class="footer-bottom-text">&copy; <span id="current-year">2025</span> Wassby Sweet. Todos los derechos reservados.</p>
         </footer>
 
-    </div><!-- /#site-content -->
+    </div>
 
-    <!-- LÓGICA DE FILTRADO Y ENTRADA -->
+    <!-- WHATSAPP FLOTANTE -->
+    <a href="https://wa.me/50585140940" class="floating-wpp" target="_blank" rel="noopener noreferrer" aria-label="Escríbenos por WhatsApp" title="Escríbenos directamente">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- CARRITO -->
+    <div class="cart-overlay" id="cart-overlay"></div>
+
+    <aside class="cart-drawer" id="cart-drawer" aria-label="Carrito de compras" aria-hidden="true">
+        <header class="cart-header">
+            <h2 class="cart-title">Tu pedido <span id="cart-count-label"></span></h2>
+            <button type="button" class="cart-close" id="cart-close-btn" aria-label="Cerrar carrito">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </header>
+
+        <div class="cart-body">
+            <div class="cart-empty" id="cart-empty">
+                <i class="fa-solid fa-bag-shopping"></i>
+                <p>Tu carrito está vacío</p>
+                <span>Agrega tus postres favoritos y pídelos por WhatsApp en un solo mensaje.</span>
+                <button type="button" class="btn-primary" id="cart-empty-btn">Ver el menú</button>
+            </div>
+            <div class="cart-items" id="cart-items"></div>
+        </div>
+
+        <footer class="cart-footer">
+            <label class="cart-note-label" for="cart-note">Nota para tu pedido (opcional)</label>
+            <textarea id="cart-note" class="cart-note" rows="2" placeholder="Ej: para el sábado, nombre en la torta..."></textarea>
+
+            <div class="cart-total-row">
+                <span>Total</span>
+                <strong id="cart-total">C$0</strong>
+            </div>
+            <p class="cart-total-hint" id="cart-total-hint" hidden>Algunos artículos tienen precio por confirmar.</p>
+
+            <button type="button" class="btn-checkout" id="checkout-btn" disabled>
+                <i class="fa-brands fa-whatsapp"></i> Pedir por WhatsApp
+            </button>
+            <p class="cart-small">Pedidos con 24h de anticipación · Managua, Nicaragua</p>
+            <button type="button" class="cart-clear" id="cart-clear-btn">Vaciar carrito</button>
+        </footer>
+    </aside>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        (function () {
+            'use strict';
 
-            // --- Pantalla de entrada ---
-            const splash = document.getElementById('splash-screen');
-            const MIN_SPLASH_TIME = 1800; // ms
-            let dismissed = false;
+            var PHONE = '50585140940';
+            var MAX_QTY = 10;
+            var CART_KEY = 'wassby-cart-v1';
+            var NOTE_KEY = 'wassby-note-v1';
 
-            function dismissSplash() {
-                if (dismissed) return;
-                dismissed = true;
-                document.body.classList.add('loaded');
-            }
+            document.addEventListener('DOMContentLoaded', function () {
 
-            setTimeout(dismissSplash, MIN_SPLASH_TIME);
-            splash.addEventListener('click', dismissSplash);
+                /* ================= AÑO ================= */
+                var yearEl = document.getElementById('current-year');
+                if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-            // --- Filtrado de categorías ---
-            const chips = document.querySelectorAll('.chip');
-            const products = document.querySelectorAll('.product-card');
+                /* ================= SPLASH ================= */
+                var splash = document.getElementById('splash-screen');
+                var SPLASH_TIME = 1500;
+                var dismissed = false;
 
-            function selectChip(chip) {
-                chips.forEach(c => c.classList.remove('active'));
-                chip.classList.add('active');
+                function dismissSplash() {
+                    if (dismissed) return;
+                    dismissed = true;
+                    document.body.classList.add('loaded');
+                }
 
-                const targetCategory = chip.getAttribute('data-target');
+                var splashTimer = setTimeout(dismissSplash, SPLASH_TIME);
+                if (splash) {
+                    splash.addEventListener('click', function () {
+                        clearTimeout(splashTimer);
+                        dismissSplash();
+                    });
+                    splash.addEventListener('keydown', function (e) {
+                        if (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape') {
+                            clearTimeout(splashTimer);
+                            dismissSplash();
+                        }
+                    });
+                }
 
-                products.forEach(product => {
-                    const productCategory = product.getAttribute('data-category');
-                    if (targetCategory === 'all' || productCategory === targetCategory) {
-                        product.classList.remove('hidden');
+                /* ================= NAVBAR ================= */
+                var navbar = document.getElementById('navbar');
+                window.addEventListener('scroll', function () {
+                    navbar.classList.toggle('scrolled', window.scrollY > 10);
+                }, { passive: true });
+
+                /* ================= FILTROS ================= */
+                var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav-link[data-target]'));
+                var products = Array.prototype.slice.call(document.querySelectorAll('.product-card'));
+                var filterStatus = document.getElementById('filter-status');
+
+                function applyFilter(target, link) {
+                    navLinks.forEach(function (l) {
+                        var on = (l === link);
+                        l.classList.toggle('active', on);
+                        if (on) l.setAttribute('aria-current', 'true');
+                        else l.removeAttribute('aria-current');
+                    });
+
+                    var visible = 0;
+                    products.forEach(function (card) {
+                        var cat = (card.getAttribute('data-category') || '').toLowerCase();
+                        var show = (target === 'all' || cat === target);
+                        card.classList.toggle('hidden', !show);
+                        if (show) {
+                            visible++;
+                            card.classList.remove('reveal');
+                            void card.offsetWidth;
+                            card.classList.add('reveal');
+                        }
+                    });
+
+                    if (filterStatus) {
+                        filterStatus.textContent = 'Mostrando ' + visible +
+                            (target === 'all' ? ' productos' : ' productos de la categoría ' + target);
+                    }
+                }
+
+                navLinks.forEach(function (link) {
+                    link.addEventListener('click', function () {
+                        applyFilter(link.getAttribute('data-target'), link);
+                    });
+                });
+
+                /* ================= GALERÍAS ================= */
+                var galleries = document.querySelectorAll('.product-gallery');
+                for (var g = 0; g < galleries.length; g++) setupGallery(galleries[g]);
+
+                function setupGallery(gallery) {
+                    var track = gallery.querySelector('.gallery-track');
+                    if (!track) return;
+
+                    var prevBtn = gallery.querySelector('.prev');
+                    var nextBtn = gallery.querySelector('.next');
+                    var dots = gallery.querySelectorAll('.dot');
+                    var images = track.querySelectorAll('img');
+                    var currentIndex = 0;
+                    var total = images.length;
+                    if (total === 0) return;
+
+                    function updateGallery() {
+                        track.style.transform = 'translateX(-' + (currentIndex * 100) + '%)';
+                        for (var k = 0; k < dots.length; k++) {
+                            dots[k].classList.toggle('active', k === currentIndex);
+                        }
+                    }
+
+                    function goTo(index) {
+                        currentIndex = ((index % total) + total) % total;
+                        updateGallery();
+                    }
+
+                    if (prevBtn) prevBtn.addEventListener('click', function (e) { e.preventDefault(); goTo(currentIndex - 1); });
+                    if (nextBtn) nextBtn.addEventListener('click', function (e) { e.preventDefault(); goTo(currentIndex + 1); });
+
+                    for (var d = 0; d < dots.length; d++) {
+                        (function (idx) {
+                            dots[idx].addEventListener('click', function (e) { e.preventDefault(); goTo(idx); });
+                        })(d);
+                    }
+
+                    var touchStartX = 0, touchStartY = 0, touchMoved = false;
+                    track.addEventListener('touchstart', function (e) {
+                        touchStartX = e.changedTouches[0].screenX;
+                        touchStartY = e.changedTouches[0].screenY;
+                        touchMoved = false;
+                    }, { passive: true });
+                    track.addEventListener('touchmove', function () { touchMoved = true; }, { passive: true });
+                    track.addEventListener('touchend', function (e) {
+                        if (!touchMoved) return;
+                        var dx = touchStartX - e.changedTouches[0].screenX;
+                        var dy = touchStartY - e.changedTouches[0].screenY;
+                        if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
+                            goTo(dx > 0 ? currentIndex + 1 : currentIndex - 1);
+                        }
+                    }, { passive: true });
+                }
+
+                /* ================= TOAST ================= */
+                var toastEl = document.getElementById('toast');
+                var toastTimer = null;
+
+                function showToast(msg) {
+                    if (!toastEl) return;
+                    toastEl.textContent = msg;
+                    toastEl.classList.add('show');
+                    clearTimeout(toastTimer);
+                    toastTimer = setTimeout(function () { toastEl.classList.remove('show'); }, 2300);
+                }
+
+                /* ================= CARRITO ================= */
+                var cart = {};
+                try {
+                    var stored = localStorage.getItem(CART_KEY);
+                    cart = stored ? JSON.parse(stored) : {};
+                } catch (err) { cart = {}; }
+                if (!cart || typeof cart !== 'object') cart = {};
+
+                var noteEl = document.getElementById('cart-note');
+                try {
+                    var storedNote = localStorage.getItem(NOTE_KEY);
+                    if (storedNote) noteEl.value = storedNote;
+                } catch (err) { /* ignore */ }
+
+                noteEl.addEventListener('input', function () {
+                    try { localStorage.setItem(NOTE_KEY, noteEl.value); } catch (err) { /* ignore */ }
+                });
+
+                var cartDrawer = document.getElementById('cart-drawer');
+                var cartOverlay = document.getElementById('cart-overlay');
+                var cartOpenBtn = document.getElementById('cart-open-btn');
+                var cartCloseBtn = document.getElementById('cart-close-btn');
+                var cartItemsEl = document.getElementById('cart-items');
+                var cartEmptyEl = document.getElementById('cart-empty');
+                var cartBadge = document.getElementById('cart-badge');
+                var cartCountLabel = document.getElementById('cart-count-label');
+                var cartTotalEl = document.getElementById('cart-total');
+                var cartTotalHint = document.getElementById('cart-total-hint');
+                var checkoutBtn = document.getElementById('checkout-btn');
+                var cartClearBtn = document.getElementById('cart-clear-btn');
+                var cartEmptyBtn = document.getElementById('cart-empty-btn');
+
+                function saveCart() {
+                    try { localStorage.setItem(CART_KEY, JSON.stringify(cart)); } catch (err) { /* ignore */ }
+                }
+
+                function formatPrice(n) {
+                    return 'C$' + Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                }
+
+                function cartItems() {
+                    return Object.keys(cart).map(function (k) { return cart[k]; });
+                }
+
+                function totals() {
+                    var total = 0, units = 0, hasUnknown = false;
+                    cartItems().forEach(function (it) {
+                        units += it.qty;
+                        if (it.price === null || it.price === undefined || isNaN(it.price)) {
+                            hasUnknown = true;
+                        } else {
+                            total += it.price * it.qty;
+                        }
+                    });
+                    return { total: total, units: units, hasUnknown: hasUnknown };
+                }
+
+                function itemHTML(it) {
+                    var img = it.image ? '<img class="cart-item-img" src="' + it.image + '" alt="" loading="lazy">' : '';
+                    var priceText = (it.price === null || it.price === undefined)
+                        ? 'Precio por confirmar'
+                        : formatPrice(it.price) + ' c/u';
+                    var sub = (it.price === null || it.price === undefined)
+                        ? '<span class="cart-item-subtotal muted">—</span>'
+                        : '<span class="cart-item-subtotal">' + formatPrice(it.price * it.qty) + '</span>';
+
+                    return '<div class="cart-item" data-id="' + it.id + '">' +
+                        img +
+                        '<div class="cart-item-info">' +
+                            '<p class="cart-item-name">' + it.name + '</p>' +
+                            '<p class="cart-item-price">' + priceText + '</p>' +
+                            '<div class="cart-item-qty">' +
+                                '<button type="button" class="cq-btn" data-act="dec" aria-label="Quitar una unidad de ' + it.name + '">−</button>' +
+                                '<span class="cq-value">' + it.qty + '</span>' +
+                                '<button type="button" class="cq-btn" data-act="inc" aria-label="Añadir una unidad de ' + it.name + '">+</button>' +
+                            '</div>' +
+                        '</div>' +
+                        '<div class="cart-item-right">' +
+                            sub +
+                            '<button type="button" class="cart-remove" data-act="remove" aria-label="Eliminar ' + it.name + ' del carrito">' +
+                                '<i class="fa-solid fa-trash-can"></i>' +
+                            '</button>' +
+                        '</div>' +
+                    '</div>';
+                }
+
+                function renderCart() {
+                    var items = cartItems();
+                    var t = totals();
+
+                    if (cartBadge) {
+                        cartBadge.textContent = t.units > 99 ? '99+' : String(t.units);
+                        cartBadge.hidden = t.units === 0;
+                        cartBadge.classList.remove('pop');
+                        if (t.units > 0) {
+                            void cartBadge.offsetWidth;
+                            cartBadge.classList.add('pop');
+                        }
+                    }
+
+                    if (cartCountLabel) {
+                        cartCountLabel.textContent = items.length ? '(' + t.units + (t.units === 1 ? ' artículo' : ' artículos') + ')' : '';
+                    }
+
+                    cartItemsEl.innerHTML = items.map(itemHTML).join('');
+                    cartEmptyEl.hidden = items.length > 0;
+                    cartItemsEl.hidden = items.length === 0;
+
+                    cartTotalEl.textContent = formatPrice(t.total);
+                    cartTotalHint.hidden = !(items.length > 0 && t.hasUnknown);
+                    checkoutBtn.disabled = items.length === 0;
+                }
+
+                function addToCart(product, qty) {
+                    var existing = cart[product.id];
+                    var current = existing ? existing.qty : 0;
+                    var room = MAX_QTY - current;
+
+                    if (room <= 0) {
+                        showToast('Máximo ' + MAX_QTY + ' unidades de ' + product.name);
+                        return 0;
+                    }
+
+                    var add = Math.min(qty, room);
+                    cart[product.id] = {
+                        id: product.id,
+                        name: product.name,
+                        price: product.price,
+                        image: product.image,
+                        qty: current + add
+                    };
+
+                    saveCart();
+                    renderCart();
+
+                    if (add < qty) {
+                        showToast('Máximo ' + MAX_QTY + ' por producto · agregamos ' + add);
                     } else {
-                        product.classList.add('hidden');
+                        showToast('✓ ' + product.name + ' agregado al carrito');
                     }
-                });
-            }
+                    return add;
+                }
 
-            chips.forEach(chip => {
-                chip.addEventListener('click', () => selectChip(chip));
-                // Accesibilidad: permitir seleccionar con teclado (Enter / Espacio)
-                chip.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        selectChip(chip);
+                function changeQty(id, delta) {
+                    var it = cart[id];
+                    if (!it) return;
+                    var next = it.qty + delta;
+                    if (next > MAX_QTY) {
+                        showToast('Máximo ' + MAX_QTY + ' unidades por producto');
+                        return;
+                    }
+                    if (next <= 0) {
+                        delete cart[id];
+                        showToast('Producto eliminado del carrito');
+                    } else {
+                        it.qty = next;
+                    }
+                    saveCart();
+                    renderCart();
+                }
+
+                function removeItem(id) {
+                    if (!cart[id]) return;
+                    var name = cart[id].name;
+                    delete cart[id];
+                    saveCart();
+                    renderCart();
+                    showToast('Eliminado: ' + name);
+                }
+
+                /* ---- Steppers en las tarjetas ---- */
+                products.forEach(function (card) {
+                    var stepper = card.querySelector('.qty-stepper');
+                    var valueEl = card.querySelector('.qty-value');
+                    var minusBtn = stepper.querySelector('[data-step="-1"]');
+                    var plusBtn = stepper.querySelector('[data-step="1"]');
+                    var addBtn = card.querySelector('.btn-add');
+                    var qty = 1;
+
+                    function renderStepper() {
+                        valueEl.textContent = qty;
+                        minusBtn.disabled = qty <= 1;
+                        plusBtn.disabled = qty >= MAX_QTY;
+                    }
+                    renderStepper();
+
+                    minusBtn.addEventListener('click', function () {
+                        if (qty > 1) { qty--; renderStepper(); }
+                    });
+                    plusBtn.addEventListener('click', function () {
+                        if (qty < MAX_QTY) { qty++; renderStepper(); }
+                    });
+
+                    addBtn.addEventListener('click', function () {
+                        var priceAttr = card.getAttribute('data-price');
+                        var price = (priceAttr === null || priceAttr === '') ? null : Number(priceAttr);
+
+                        addToCart({
+                            id: card.getAttribute('data-id'),
+                            name: card.getAttribute('data-name'),
+                            price: price,
+                            image: card.getAttribute('data-image')
+                        }, qty);
+                    });
+                });
+
+                /* ---- Delegación dentro del carrito ---- */
+                cartItemsEl.addEventListener('click', function (e) {
+                    var btn = e.target.closest('[data-act]');
+                    if (!btn) return;
+                    var row = btn.closest('.cart-item');
+                    if (!row) return;
+                    var id = row.getAttribute('data-id');
+                    var act = btn.getAttribute('data-act');
+
+                    if (act === 'inc') changeQty(id, 1);
+                    else if (act === 'dec') changeQty(id, -1);
+                    else if (act === 'remove') removeItem(id);
+                });
+
+                /* ---- Abrir / cerrar carrito ---- */
+                function openCart() {
+                    cartDrawer.classList.add('open');
+                    cartOverlay.classList.add('visible');
+                    cartDrawer.setAttribute('aria-hidden', 'false');
+                    document.body.classList.add('no-scroll');
+                    renderCart();
+                    setTimeout(function () { cartCloseBtn.focus(); }, 120);
+                }
+
+                function closeCart() {
+                    cartDrawer.classList.remove('open');
+                    cartOverlay.classList.remove('visible');
+                    cartDrawer.setAttribute('aria-hidden', 'true');
+                    document.body.classList.remove('no-scroll');
+                    cartOpenBtn.focus();
+                }
+
+                cartOpenBtn.addEventListener('click', openCart);
+                cartCloseBtn.addEventListener('click', closeCart);
+                cartOverlay.addEventListener('click', closeCart);
+
+                cartEmptyBtn.addEventListener('click', function () {
+                    closeCart();
+                    var menu = document.getElementById('menu');
+                    if (menu) menu.scrollIntoView({ behavior: 'smooth' });
+                });
+
+                cartClearBtn.addEventListener('click', function () {
+                    if (cartItems().length === 0) return;
+                    if (!window.confirm('¿Vaciar el carrito?')) return;
+                    cart = {};
+                    saveCart();
+                    renderCart();
+                    showToast('Carrito vaciado');
+                });
+
+                document.addEventListener('keydown', function (e) {
+                    if (e.key === 'Escape' && cartDrawer.classList.contains('open')) {
+                        closeCart();
                     }
                 });
+
+                /* ---- Checkout: enviar todo por WhatsApp ---- */
+                checkoutBtn.addEventListener('click', function () {
+                    var items = cartItems();
+                    if (items.length === 0) return;
+
+                    var lines = ['¡Hola Wassby Sweet! 🧁 Quiero hacer este pedido:', ''];
+
+                    items.forEach(function (it) {
+                        var line = '• ' + it.qty + ' × ' + it.name;
+                        if (it.price === null || it.price === undefined) {
+                            line += ' — precio por confirmar';
+                        } else {
+                            line += ' — ' + formatPrice(it.price) + ' c/u → ' + formatPrice(it.price * it.qty);
+                        }
+                        lines.push(line);
+                    });
+
+                    var t = totals();
+                    lines.push('');
+                    lines.push('💰 Total: ' + formatPrice(t.total) +
+                        (t.hasUnknown ? ' (más artículos por confirmar)' : ''));
+
+                    var note = noteEl.value.trim();
+                    if (note) {
+                        lines.push('');
+                        lines.push('📝 Nota: ' + note);
+                    }
+
+                    lines.push('');
+                    lines.push('Pedido realizado desde el catálogo web ✨');
+
+                    var url = 'https://wa.me/' + PHONE + '?text=' + encodeURIComponent(lines.join('\n'));
+                    window.open(url, '_blank');
+                });
+
+                /* ---- Estado inicial ---- */
+                renderCart();
+
+                /* ---- Atajos de teclado 1-5 para categorías ---- */
+                document.addEventListener('keydown', function (e) {
+                    if (e.target && /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
+                    if (e.key >= '1' && e.key <= '5') {
+                        var idx = parseInt(e.key, 10) - 1;
+                        if (navLinks[idx]) navLinks[idx].click();
+                    }
+                });
+
             });
-        });
+        })();
     </script>
 </body>
 </html>
